@@ -1,2 +1,5 @@
 # Pvm | Tunnit | Kuvaus
 15.01.12 | 2 | Luotiin github-repositorio ja tehtiin ekat commitit 
+18.01.12 | 2 | Tehtiin paketit domain ja peli, näihin luokat ruutu, ruudukko, pelihahmo, ja peli
+19.01.12 | 1 | Tehtiin parannuksia peli-luokkaan. Tehtiin testejä luokille ruutu, ruudukko ja pelihahmo
+22.01.12 | 1 | Tehtiin eka versio luokkakaaviosta
