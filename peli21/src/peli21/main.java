@@ -4,8 +4,11 @@
  */
 package peli21;
 
+import javax.swing.SwingUtilities;
 import peli21.domain.Ruudukko;
 import peli21.domain.Ruutu;
+import peli21.gui.Kayttoliittyma;
+import peli21.peli.Peli;
 
 /**
  *
@@ -18,7 +21,20 @@ public class main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("Seisotte nyt paikalla, johon on valmistumassa eeppinen ruudukkopeli.");
+        System.out.println("Seisotte nyt paikalla, johon on hyvää vauhtia valmistumassa eeppinen ruudukkopeli.");
+
+        Peli ruudukkopeli = new Peli(20, 10);
+        Kayttoliittyma gui = new Kayttoliittyma(ruudukkopeli, 40);
+        SwingUtilities.invokeLater(gui);
+        while (gui.getPiirtoalusta() == null) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                System.out.println("Piirtoalustaa ei ole vielä luotu.");
+            }
+        }
+
+        ruudukkopeli.setPaivitettava(gui.getPiirtoalusta());
 //        
 //        System.out.println("Tehtiin ruudukko mitoilla (5, 4)");
 //        Ruudukko ruudukko1 = new Ruudukko(5, 4);
