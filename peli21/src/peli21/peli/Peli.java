@@ -75,6 +75,10 @@ public class Peli implements ActionListener {
         System.out.println(ruudukko.getPelaaja());
         System.out.println("Pisteet: " + pistelaskuri);
     }
+    
+    public int getPisteet() {
+        return this.pistelaskuri;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -34,7 +34,7 @@ public class Kayttoliittyma implements Runnable {
     public void run() {
 
         frame = new JFrame("Peli 21");
-        int leveys = (peli.getRuudukko().getLEVEYS()) * sivunPituus + 10;
+        int leveys = (peli.getRuudukko().getLEVEYS()) * sivunPituus + 100;
         int korkeus = (peli.getRuudukko().getKORKEUS() + 1) * sivunPituus + 10;
         frame.setPreferredSize(new Dimension(leveys, korkeus));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
