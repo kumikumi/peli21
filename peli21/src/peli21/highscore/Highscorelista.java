@@ -17,11 +17,11 @@ import java.util.Scanner;
  * @author mikko
  */
 public class Highscorelista {
-    
+
     private List<Tulos> tuloslista;
     private int listanKoko;
     private File tiedosto;
-    
+
     public Highscorelista(int listanKoko) {
         this.tuloslista = new ArrayList<Tulos>();
         this.listanKoko = listanKoko;
@@ -29,10 +29,9 @@ public class Highscorelista {
         try {
             lataaLista(tiedosto);
         } catch (FileNotFoundException ex) {
-            
         }
     }
-    
+
     private void lataaLista(File tiedosto) throws FileNotFoundException {
         Scanner lukija = new Scanner(tiedosto);
         String rivi;
@@ -47,15 +46,15 @@ public class Highscorelista {
         //Varmistetaan, että ladatut tulokset ovat järjestyksessä.
         Collections.sort(tuloslista);
     }
-    
+
     private void tallennaLista(File tiedosto) {
         try {
             FileWriter kirjoittaja = new FileWriter(tiedosto);
-            
+
             for (Tulos t : tuloslista) {
-                kirjoittaja.write(t.toString()+ "\n");
+                kirjoittaja.write(t.toString() + "\n");
             }
-            
+
             kirjoittaja.close();
         } catch (java.io.IOException ex) {
             System.out.println("VIRHE: Jotain meni pieleen tiedostoa kirjoitettaessa.");
@@ -63,20 +62,20 @@ public class Highscorelista {
     }
 
     public void lisaa(String nimi, int pisteet) {
+        this.tuloslista.add(new Tulos(nimi, pisteet));
+        Collections.sort(tuloslista);
         if (tuloslista.size() == this.listanKoko) {
             tuloslista.remove(tuloslista.size() - 1);
         }
-        this.tuloslista.add(new Tulos(nimi, pisteet));
-        Collections.sort(tuloslista);
         tallennaLista(this.tiedosto);
     }
-    
+
     public void tulosta() {
         for (Tulos t : tuloslista) {
             System.out.println(t);
         }
     }
-    
+
     public void tyhjenna() {
         this.tuloslista = new ArrayList<Tulos>();
         tallennaLista(this.tiedosto);
