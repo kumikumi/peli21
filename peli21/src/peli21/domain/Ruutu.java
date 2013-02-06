@@ -28,20 +28,20 @@ public class Ruutu {
         this(false, false, false, false);
     }
 
-    public boolean isDown() {
-        return down;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public boolean isUp() {
-        return up;
+    public void setSuunta(Suunta suunta, boolean tila) {
+        switch (suunta) {
+            case YLOS:
+                this.up = tila;
+                return;
+            case ALAS:
+                this.down = tila;
+                return;
+            case VASEN:
+                this.left = tila;
+                return;
+            case OIKEA:
+                this.right = tila;
+        }
     }
 
     public boolean isSuunta(Suunta suunta) {
@@ -56,21 +56,5 @@ public class Ruutu {
                 return this.right;
         }
         return false;
-    }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public void setUp(boolean up) {
-        this.up = up;
     }
 }

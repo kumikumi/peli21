@@ -54,14 +54,11 @@ public class RuudukkoTest {
         pelilauta.liikutaPelaajaa(Suunta.YLOS);
         pelilauta.liikutaPelaajaa(Suunta.YLOS);
         pelilauta.liikutaPelaajaa(Suunta.OIKEA);
-        pelilauta.liikutaPelaajaa(Suunta.VASEN);
-        pelilauta.liikutaPelaajaa(Suunta.OIKEA);
         pelilauta.liikutaPelaajaa(Suunta.OIKEA);
         pelilauta.liikutaPelaajaa(Suunta.ALAS);
         pelilauta.liikutaPelaajaa(Suunta.ALAS);
-        pelilauta.liikutaPelaajaa(Suunta.YLOS);
         assertEquals(12, pelilauta.getPelaaja().getX());
-        assertEquals(3, pelilauta.getPelaaja().getY());
+        assertEquals(4, pelilauta.getPelaaja().getY());
     }
     
     @Test
@@ -78,9 +75,5 @@ public class RuudukkoTest {
         assertEquals(19, pelilauta.getPelaaja().getX());
         assertEquals(Effect.DEATH, pelilauta.liikutaPelaajaa(Suunta.OIKEA));
         assertEquals(19, pelilauta.getPelaaja().getX());
-    }
-    
-    public void pelaajaEiMeneOikeanReunanYli() {
-        
     }
 }

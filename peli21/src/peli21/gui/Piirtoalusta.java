@@ -10,10 +10,14 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import peli21.Suunta;
 import peli21.domain.Pelihahmo;
 import peli21.domain.Ruudukko;
+import peli21.domain.Ruutu;
 import peli21.peli.Peli;
 
 /**
@@ -27,6 +31,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private Pelihahmo pelihahmo;
     private Font font;
     private Image kuva;
+    private Map<Suunta, Image> kuvat;
 
     public Piirtoalusta(Peli peli, int palanSivunPituus) {
         this.peli = peli;
@@ -34,12 +39,16 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         this.peliruudukko = peli.getRuudukko();
         this.pelihahmo = peliruudukko.getPelaaja();
         this.font = new Font("Serif", Font.PLAIN, 16);
+        this.kuvat = new HashMap<Suunta, Image>();
         lataaKuvat();
     }
 
     private void lataaKuvat() {
         try {
-            this.kuva = ImageIO.read(new File("img/nuolet.png"));
+            kuvat.put(Suunta.YLOS, ImageIO.read(new File("img/up_a.png")));
+            kuvat.put(Suunta.ALAS, ImageIO.read(new File("img/down_a.png")));
+            kuvat.put(Suunta.OIKEA, ImageIO.read(new File("img/right_a.png")));
+            kuvat.put(Suunta.VASEN, ImageIO.read(new File("img/left_a.png")));
         } catch (IOException ex) {
             System.out.println("asdf");
         }
@@ -48,15 +57,18 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //Ruutu[][] ruudukko = peli.getRuudukko().getRuutuTaulukko();
+        Ruutu[][] ruudukko = peli.getRuudukko().getTaulukko();
 
         g.setColor(Color.BLACK);
 
         for (int x = 0; x < peliruudukko.getLEVEYS(); x++) {
             for (int y = 0; y < peliruudukko.getKORKEUS(); y++) {
-                g.drawRect(x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus);
-                // TODO: Piirrä ruutuun nuolet
-                g.drawImage(kuva, x * sivunPituus, y * sivunPituus, this);
+                g.fill3DRect(x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, true);
+                for (Suunta s : kuvat.keySet()) {
+                    if (ruudukko[x][y].isSuunta(s)) {
+                        g.drawImage(kuvat.get(s), x * sivunPituus, y * sivunPituus, this);
+                    }
+                }
             }
         }
 

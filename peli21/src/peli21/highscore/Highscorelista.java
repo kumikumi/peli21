@@ -40,8 +40,12 @@ public class Highscorelista {
             if (rivi.charAt(0) == '#') {
                 continue;
             }
+            try {
             String[] osat = rivi.split(":");
             this.tuloslista.add(new Tulos(osat[0], Integer.parseInt(osat[1])));
+            } catch (Exception e) {
+                System.out.println("Jotain meni pieleen highscorelistaa ladattaessa.");
+            }
         }
         //Varmistetaan, että ladatut tulokset ovat järjestyksessä.
         Collections.sort(tuloslista);

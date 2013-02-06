@@ -29,7 +29,7 @@ public class PeliTest {
     
     @Before
     public void setUp() {
-        ruudukkopeli = new Peli(20, 15);
+        ruudukkopeli = new Peli("Testaaja", 20, 15);
     }
     
     @After

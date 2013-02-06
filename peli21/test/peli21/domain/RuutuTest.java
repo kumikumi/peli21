@@ -39,56 +39,48 @@ public class RuutuTest {
     @Test
     public void isDownAluksiFalse() {
         Ruutu ruutu = new Ruutu();
-        assertEquals(false, ruutu.isDown());
         assertEquals(false, ruutu.isSuunta(Suunta.ALAS));
     }
     @Test
     public void isLeftAluksiFalse() {
         Ruutu ruutu = new Ruutu();
-        assertEquals(false, ruutu.isLeft());
         assertEquals(false, ruutu.isSuunta(Suunta.VASEN));
     }
     @Test
     public void isRightAluksiFalse() {
         Ruutu ruutu = new Ruutu();
-        assertEquals(false, ruutu.isRight());
         assertEquals(false, ruutu.isSuunta(Suunta.OIKEA));
     }
     @Test
     public void isUpAluksiFalse() {
         Ruutu ruutu = new Ruutu();
-        assertEquals(false, ruutu.isUp());
         assertEquals(false, ruutu.isSuunta(Suunta.YLOS));
     }
     @Test
-    public void setDownToimii() {
+    public void setSuuntaAlasToimii() {
         Ruutu ruutu = new Ruutu();
-        ruutu.setDown(true);
-        assertEquals(true, ruutu.isDown());
+        ruutu.setSuunta(Suunta.ALAS, true);
         assertEquals(true, ruutu.isSuunta(Suunta.ALAS));
     }
 
     @Test
-    public void setLeftToimii() {
+    public void setSuuntaVasenToimii() {
         Ruutu ruutu = new Ruutu();
-        ruutu.setLeft(true);
-        assertEquals(true, ruutu.isLeft());
+        ruutu.setSuunta(Suunta.VASEN, true);
         assertEquals(true, ruutu.isSuunta(Suunta.VASEN));
     }
 
     @Test
-    public void setRightToimii() {
+    public void setSuuntaOikeaToimii() {
         Ruutu ruutu = new Ruutu();
-        ruutu.setRight(true);
-        assertEquals(true, ruutu.isRight());
+        ruutu.setSuunta(Suunta.OIKEA, true);
         assertEquals(true, ruutu.isSuunta(Suunta.OIKEA));
     }
 
     @Test
-    public void setUpToimii() {
+    public void setSuuntaYlosToimii() {
         Ruutu ruutu = new Ruutu();
-        ruutu.setUp(true);
-        assertEquals(true, ruutu.isUp());
+        ruutu.setSuunta(Suunta.YLOS, true);
         assertEquals(true, ruutu.isSuunta(Suunta.YLOS));
     }
 }

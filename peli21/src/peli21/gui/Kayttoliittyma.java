@@ -7,6 +7,9 @@ package peli21.gui;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 import peli21.peli.Peli;
 
@@ -47,8 +50,16 @@ public class Kayttoliittyma implements Runnable {
     private void luoKomponentit(Container contentPane) {
         //Luodaan ensin piirtoalusta, lisätään se container-olioon
         //Sitten luodaan näppäimistönkuuntelija ja annetaan se framelle
+        //ja luodaan vielä hauska menubar kaupan päälle
         piirtoalusta = new Piirtoalusta(peli, sivunPituus);
         contentPane.add(piirtoalusta);
         frame.addKeyListener(new Nappaimistonkuuntelija(peli));
+        JMenuItem newAction = new JMenuItem("New game");
+        newAction.setEnabled(false);
+        JMenu gameMenu = new JMenu("Game");
+        gameMenu.add(newAction);
+        JMenuBar menubar = new JMenuBar();
+        menubar.add(gameMenu);
+        frame.setJMenuBar(menubar);
     }
 }
