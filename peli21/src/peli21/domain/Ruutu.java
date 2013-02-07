@@ -7,8 +7,8 @@ package peli21.domain;
 import peli21.Suunta;
 
 /**
- *
- * @author mikko
+ * Ruudulla on neljä boolean-tyyppistä muuttujaa <code>up</code>, <code>down</code>, <code>left</code>, <code>right</code>,
+ * jotka ilmaisevat, voiko ruutuun siirtyä liikkumalla kyseisen muuttujan ilmaisemaan suuntaan.
  */
 public class Ruutu {
 
@@ -17,6 +17,13 @@ public class Ruutu {
     private boolean left;
     private boolean right;
 
+/**
+ * Ruudun luonnin yhteydessä voidaan antaa eri suunnille tilat järjestyksessä <code>up</code>, <code>down</code>, <code>left</code>, <code>right</code>.
+ * @param up
+ * @param down
+ * @param left
+ * @param right 
+ */
     public Ruutu(boolean up, boolean down, boolean left, boolean right) {
         this.up = up;
         this.down = down;
@@ -24,10 +31,21 @@ public class Ruutu {
         this.right = right;
     }
 
+    /**
+     * Oletusarvoisesti kaikki neljä suuntaa saavat arvokseen <code>false</code>.
+     */
     public Ruutu() {
         this(false, false, false, false);
     }
 
+    /**
+     * 
+     * Asettaa suunnan <code>suunta</code> tilaksi <code>tila</code>.
+     * 
+     * 
+     * @param suunta
+     * @param tila 
+     */
     public void setSuunta(Suunta suunta, boolean tila) {
         switch (suunta) {
             case YLOS:
@@ -44,6 +62,11 @@ public class Ruutu {
         }
     }
 
+    /**
+     * Palauttaa tiedon parametrina annetun suunnan <suunta> tilasta.
+     * @param suunta Suunta saadaan Suunta-luokasta ja voi olla Suunta.YLOS, Suunta.ALAS, Suunta.VASEN tai Suunta.OIKEA.
+     * @return Boolean-tyyppinen tieto parametrina annetun suunnan tilasta.
+     */
     public boolean isSuunta(Suunta suunta) {
         switch (suunta) {
             case YLOS:

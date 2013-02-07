@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -39,7 +40,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         this.peliruudukko = peli.getRuudukko();
         this.pelihahmo = peliruudukko.getPelaaja();
         this.font = new Font("Serif", Font.PLAIN, 16);
-        this.kuvat = new HashMap<Suunta, Image>();
+        this.kuvat = new EnumMap<Suunta, Image>(Suunta.class);
         lataaKuvat();
     }
 
