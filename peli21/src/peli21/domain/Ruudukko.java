@@ -7,8 +7,8 @@ package peli21.domain;
 import peli21.Effect;
 import peli21.Suunta;
 /**
- *
- * @author mikko
+ *Ruudukko tuntee taulukollisen ruutuja ja pelihahmon. Ruudukko on vastuussa siirtojen toteuttamisesta, 
+ * ja raportoi tehtyjen siirtojen vaikutuksista.
  */
 public class Ruudukko {
 
@@ -17,6 +17,11 @@ public class Ruudukko {
     private final int LEVEYS;
     private final int KORKEUS;
 
+    /**
+     * Konstruktorissa ruudukolle annetaan parametreina <code>leveys</code> ja <code>korkeus</code>. Ruudukko huolehtii ruutujen alustamisesta ja pelihahmon luonnista.
+     * @param leveys
+     * @param korkeus 
+     */
     public Ruudukko(int leveys, int korkeus) {
         this.LEVEYS = leveys;
         this.KORKEUS = korkeus;
@@ -55,6 +60,12 @@ public class Ruudukko {
         return KORKEUS;
     }
 
+    /**
+     * Pelaajaa voi liikuttaa kerrallaan yhteen neljästä suunnasta. Ruudukko saattaa muuttua tätä metodia kutsuttaessa.
+     * @param suunta Suunta, johon pelaajaa liikutetaan.
+     * @return Seuraus tehdylle siirrolle. Jos siirto oli laillinen, palautetaan <code>Effect.SUCCESS</code>.
+     * Jos siirto oli laiton, palautetaan <code>Effect.DEATH</code>.
+     */
     public Effect liikutaPelaajaa(Suunta suunta) {
         // TODO: muuta ruudukkoa pelaajan liikkumisen yhteydessä
         pelaaja.liikuta(suunta);
