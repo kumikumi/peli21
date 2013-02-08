@@ -6,8 +6,8 @@ package peli21.peli;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import javax.swing.Timer;
+import peli21.Effect;
 import peli21.Suunta;
 //import peli21.domain.Pelihahmo;
 import peli21.domain.Ruudukko;
@@ -16,8 +16,13 @@ import peli21.highscore.Highscorelista;
 //import peli21.gui.Piirtoalusta;
 
 /**
- *
- * @author mikko
+ * Tämä luokka huolehtii pelin hallinnoimisesta ja pisteidenlaskusta. Luokka
+ * tuntee pelilautana käytettävän
+ * <code>Ruudukko</code>-olion, välittää sille pelihahmon siirtokäskyt, laskee
+ * pisteet ja lopettaa pelin tarvittaessa. Peli siis ei ole tietoinen pelihahmon
+ * paikasta tai ruudukon tilasta, se ainoastaan välittää ruudukolle pelihahmon
+ * siirtokäskyt ja vastaanottaa palautuksena
+ * <code>Effect</code>-enumin muodossa tiedon siirron seurauksesta.
  */
 public class Peli implements ActionListener {
     //private int leveys;
@@ -32,6 +37,15 @@ public class Peli implements ActionListener {
     private Paivitettava paivitettava;
     //private Pelihahmo pelaaja;
 
+    /**
+     * Konstruktorissa pelille tulee antaa tieto pelaajan nimestä ja
+     * peliruudukolle annettavat mitat. Näitä mittoja käytetään sopivan
+     * <code>Ruudukko</code>-olion luomiseen.
+     *
+     * @param pelaajanNimi Pelaajalle annettava nimi.
+     * @param leveys Luotavan ruudukon leveys (ruutuina).
+     * @param korkeus Luotavan ruudukon korkeus (ruutuina).
+     */
     public Peli(String pelaajanNimi, int leveys, int korkeus) {
         this.ajastin = new Timer(1000, null);
         ajastin.setInitialDelay(2000);
@@ -44,7 +58,7 @@ public class Peli implements ActionListener {
         this.pistelaskuri = 0;
         this.highscorelista = new Highscorelista(10);
     }
-    
+
     public Ruudukko getRuudukko() {
         return this.ruudukko;
     }
@@ -52,13 +66,32 @@ public class Peli implements ActionListener {
     public void setPaivitettava(Paivitettava piirtoalusta) {
         this.paivitettava = piirtoalusta;
     }
-    
-    
+
+    /**
+     * Liikuttaa pelaajaa parametrina annettuun suuntaan. Tämän metodin
+     * kutsumisen yhteydessä tämä olio käskee
+     * <code>Ruudukko</code>-oliota liikuttamaan pelihahmoa parametrina
+     * annettuun suuntaan, ja siirron seurauksesta riippuen kasvattaa
+     * pistemäärää yhdellä tai lopettaa pelin. Jos peli on jo päättynyt, siirtoa
+     * ei tehdä.
+     *
+     * @param suunta
+     */
     public void liikutaPelaajaa(Suunta suunta) {
         if (!jatkuu) {
             return;
         }
-        switch (ruudukko.liikutaPelaajaa(suunta)) {
+        reagoiPalautukseen(ruudukko.liikutaPelaajaa(suunta));
+        if (!jatkuu) {
+            return;
+        }
+        this.paivitettava.paivita();
+        System.out.println(ruudukko.getPelaaja());
+        System.out.println("Pisteet: " + pistelaskuri);
+    }
+
+    private void reagoiPalautukseen(Effect e) {
+        switch (e) {
             case SUCCESS:
                 pistelaskuri++;
                 break;
@@ -67,15 +100,9 @@ public class Peli implements ActionListener {
                 jatkuu = false;
                 highscorelista.lisaa(pelaajanNimi, pistelaskuri);
                 highscorelista.tulosta();
-                return;
-                
-                
         }
-        this.paivitettava.paivita();
-        System.out.println(ruudukko.getPelaaja());
-        System.out.println("Pisteet: " + pistelaskuri);
     }
-    
+
     public int getPisteet() {
         return this.pistelaskuri;
     }

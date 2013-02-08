@@ -37,7 +37,6 @@ public class Ruudukko {
             }
         }
     }
-
     public Ruutu[][] getTaulukko() {
         return taulukko;
     }

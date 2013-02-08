@@ -7,3 +7,4 @@
 04.02.12 | 2 | Tehtiin highscoren talletusta varten Highscorelista- ja Tulos-luokat. Highscorelista käsittelee ainakin toistaiseksi suoraan tiedostoa. Peli tallentaa pelaajan tuloksen pelin päätyttyä nimellä "Pelaaja".
 05.02.12 | 1 | Piirtoalusta piirtää nyt rumaa grafiikkaa ja pistelukeman näytölle.
 07.02.12 | 2 | Tehtiin ruudukosta ensimmäistä kertaa eräällä tavalla interaktiivinen: nyt ruutu poistaa siirron jälkeen ruudusta nuolen, jonka pelaaja on käyttänyt. Tehtiin ensimmäinen versio menupalkista. Paranneltiin Ruutu-luokkaa ja poisteltiin vanhentuneita metodeja. Päivitettiin testit.
+08.02.12 | 1 | Pientä refaktorointia ja javadocin päivittelyä.
