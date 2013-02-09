@@ -25,9 +25,9 @@ import peli21.highscore.Highscorelista;
  * <code>Effect</code>-enumin muodossa tiedon siirron seurauksesta.
  */
 public class Peli implements ActionListener {
-    //private int leveys;
-    //private int korkeus;
 
+    private int leveys;
+    private int korkeus;
     private Highscorelista highscorelista;
     private String pelaajanNimi;
     private boolean jatkuu;
@@ -50,8 +50,8 @@ public class Peli implements ActionListener {
         this.ajastin = new Timer(1000, null);
         ajastin.setInitialDelay(2000);
         //ajastin.addActionListener(this);
-        //this.leveys = leveys;
-        //this.korkeus = korkeus;
+        this.leveys = leveys;
+        this.korkeus = korkeus;
         this.pelaajanNimi = pelaajanNimi;
         this.jatkuu = true;
         this.ruudukko = new Ruudukko(leveys, korkeus);
@@ -59,10 +59,26 @@ public class Peli implements ActionListener {
         this.highscorelista = new Highscorelista(10);
     }
 
+    public void uusiPeli(String pelaajanNimi, int leveys, int korkeus) {
+        this.pelaajanNimi = pelaajanNimi;
+        this.pistelaskuri = 0;
+        this.ruudukko = new Ruudukko(leveys, korkeus);
+        this.paivitettava.paivitaKomponentit();
+        this.paivitettava.paivita();
+        this.jatkuu = true;
+    }
+
     public Ruudukko getRuudukko() {
         return this.ruudukko;
     }
 
+    public boolean jatkuu() {
+        return this.jatkuu;
+    }
+
+    public String getPelaajanNimi() {
+        return this.pelaajanNimi;
+    }
     public void setPaivitettava(Paivitettava piirtoalusta) {
         this.paivitettava = piirtoalusta;
     }
@@ -82,10 +98,10 @@ public class Peli implements ActionListener {
             return;
         }
         reagoiPalautukseen(ruudukko.liikutaPelaajaa(suunta));
+        this.paivitettava.paivita();
         if (!jatkuu) {
             return;
         }
-        this.paivitettava.paivita();
         System.out.println(ruudukko.getPelaaja());
         System.out.println("Pisteet: " + pistelaskuri);
     }

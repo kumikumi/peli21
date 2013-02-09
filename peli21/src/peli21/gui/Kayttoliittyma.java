@@ -37,14 +37,17 @@ public class Kayttoliittyma implements Runnable {
     public void run() {
 
         frame = new JFrame("Peli 21");
-        int leveys = (peli.getRuudukko().getLEVEYS()) * sivunPituus + 100;
-        int korkeus = (peli.getRuudukko().getKORKEUS() + 1) * sivunPituus + 10;
-        frame.setPreferredSize(new Dimension(leveys, korkeus));
+        paivitaKoko();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         luoKomponentit(frame.getContentPane());
-
-        frame.pack();
         frame.setVisible(true);
+    }
+
+    public void paivitaKoko() {
+        int leveys = (peli.getRuudukko().getLEVEYS()) * sivunPituus + 120;
+        int korkeus = (peli.getRuudukko().getKORKEUS() + 1) * sivunPituus + 10;
+        frame.setPreferredSize(new Dimension(leveys, korkeus));
+        frame.pack();
     }
 
     private void luoKomponentit(Container contentPane) {
@@ -55,7 +58,7 @@ public class Kayttoliittyma implements Runnable {
         contentPane.add(piirtoalusta);
         frame.addKeyListener(new Nappaimistonkuuntelija(peli));
         JMenuItem newAction = new JMenuItem("New game");
-        newAction.setEnabled(false);
+        newAction.addActionListener(new UusiPeliKuuntelija(peli, this));
         JMenu gameMenu = new JMenu("Game");
         gameMenu.add(newAction);
         JMenuBar menubar = new JMenuBar();

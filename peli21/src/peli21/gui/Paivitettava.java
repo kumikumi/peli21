@@ -10,4 +10,5 @@ package peli21.gui;
  */
 public interface Paivitettava {
     void paivita();
+    void paivitaKomponentit();
 }

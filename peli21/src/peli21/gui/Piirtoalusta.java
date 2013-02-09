@@ -26,19 +26,19 @@ import peli21.peli.Peli;
  * @author mikko
  */
 public class Piirtoalusta extends JPanel implements Paivitettava {
+
     private Peli peli;
     private int sivunPituus;
     private Ruudukko peliruudukko;
+    private Ruutu[][] taulukko;
     private Pelihahmo pelihahmo;
     private Font font;
-    private Image kuva;
     private Map<Suunta, Image> kuvat;
 
     public Piirtoalusta(Peli peli, int palanSivunPituus) {
         this.peli = peli;
         this.sivunPituus = palanSivunPituus;
-        this.peliruudukko = peli.getRuudukko();
-        this.pelihahmo = peliruudukko.getPelaaja();
+        paivitaKomponentit();
         this.font = new Font("Serif", Font.PLAIN, 16);
         this.kuvat = new EnumMap<Suunta, Image>(Suunta.class);
         lataaKuvat();
@@ -58,15 +58,12 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Ruutu[][] ruudukko = peli.getRuudukko().getTaulukko();
-
         g.setColor(Color.BLACK);
-
         for (int x = 0; x < peliruudukko.getLEVEYS(); x++) {
             for (int y = 0; y < peliruudukko.getKORKEUS(); y++) {
                 g.fill3DRect(x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, true);
                 for (Suunta s : kuvat.keySet()) {
-                    if (ruudukko[x][y].isSuunta(s)) {
+                    if (taulukko[x][y].isSuunta(s)) {
                         g.drawImage(kuvat.get(s), x * sivunPituus, y * sivunPituus, this);
                     }
                 }
@@ -76,8 +73,20 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         g.setColor(Color.RED);
         g.fillOval(pelihahmo.getX() * sivunPituus, pelihahmo.getY() * sivunPituus, sivunPituus, sivunPituus);
         g.setFont(font);
-        g.drawString("SCORE: " + peli.getPisteet(), peliruudukko.getLEVEYS() * sivunPituus + 10, 20);
-        //g.drawString("SCORE: " + peli.getPisteet(), peliruudukko.getKORKEUS()/2, peliruudukko.getLEVEYS()*sivunPituus + 10);
+        g.drawString(peli.getPelaajanNimi(), peliruudukko.getLEVEYS()*sivunPituus+10, 20);
+        g.drawString("SCORE: " + peli.getPisteet(), peliruudukko.getLEVEYS() * sivunPituus + 10, 40);
+        if (!peli.jatkuu()) {
+            g.drawString("GAME OVER", peliruudukko.getLEVEYS()*sivunPituus+10, 60);
+        }
+    }
+
+    /**
+     * Tätä metodia pitää kutsua joka kerta, kun uusi peli on käynnistetty.
+     */
+    public void paivitaKomponentit() {
+        this.peliruudukko = peli.getRuudukko();
+        this.taulukko = peliruudukko.getTaulukko();
+        this.pelihahmo = peliruudukko.getPelaaja();
     }
 
     @Override
