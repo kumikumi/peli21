@@ -46,10 +46,10 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
 
     private void lataaKuvat() {
         try {
-            kuvat.put(Suunta.YLOS, ImageIO.read(new File("img/up_a.png")));
-            kuvat.put(Suunta.ALAS, ImageIO.read(new File("img/down_a.png")));
-            kuvat.put(Suunta.OIKEA, ImageIO.read(new File("img/right_a.png")));
-            kuvat.put(Suunta.VASEN, ImageIO.read(new File("img/left_a.png")));
+            kuvat.put(Suunta.YLOS, ImageIO.read(new File("src/img/up.png")));
+            kuvat.put(Suunta.ALAS, ImageIO.read(new File("src/img/down.png")));
+            kuvat.put(Suunta.OIKEA, ImageIO.read(new File("src/img/right.png")));
+            kuvat.put(Suunta.VASEN, ImageIO.read(new File("src/img/left.png")));
         } catch (IOException ex) {
             System.out.println("asdf");
         }
