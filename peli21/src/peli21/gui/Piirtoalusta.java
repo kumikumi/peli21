@@ -38,7 +38,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     public Piirtoalusta(Peli peli, int palanSivunPituus) {
         this.peli = peli;
         this.sivunPituus = palanSivunPituus;
-        paivitaKomponentit();
+        this.paivitaKomponentit();
         this.font = new Font("Serif", Font.PLAIN, 16);
         this.kuvat = new EnumMap<Suunta, Image>(Suunta.class);
         lataaKuvat();
@@ -46,10 +46,14 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
 
     private void lataaKuvat() {
         try {
-            kuvat.put(Suunta.YLOS, ImageIO.read(new File("src/img/up.png")));
-            kuvat.put(Suunta.ALAS, ImageIO.read(new File("src/img/down.png")));
-            kuvat.put(Suunta.OIKEA, ImageIO.read(new File("src/img/right.png")));
-            kuvat.put(Suunta.VASEN, ImageIO.read(new File("src/img/left.png")));
+            kuvat.put(Suunta.YLOS, ImageIO.read(this.getClass().getResource("/up.png")));
+            kuvat.put(Suunta.ALAS, ImageIO.read(this.getClass().getResource("/down.png")));
+            kuvat.put(Suunta.OIKEA, ImageIO.read(this.getClass().getResource("/right.png")));
+            kuvat.put(Suunta.VASEN, ImageIO.read(this.getClass().getResource("/left.png")));
+//          kuvat.put(Suunta.YLOS, ImageIO.read(new File("img/up_a.png")));
+//          kuvat.put(Suunta.ALAS, ImageIO.read(new File("img/down_a.png")));
+//          kuvat.put(Suunta.OIKEA, ImageIO.read(new File("img/right_a.png")));
+//          kuvat.put(Suunta.VASEN, ImageIO.read(new File("img/left_a.png")));
         } catch (IOException ex) {
             System.out.println("asdf");
         }
@@ -73,10 +77,10 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         g.setColor(Color.RED);
         g.fillOval(pelihahmo.getX() * sivunPituus, pelihahmo.getY() * sivunPituus, sivunPituus, sivunPituus);
         g.setFont(font);
-        g.drawString(peli.getPelaajanNimi(), peliruudukko.getLEVEYS()*sivunPituus+10, 20);
+        g.drawString(peli.getPelaajanNimi(), peliruudukko.getLEVEYS() * sivunPituus + 10, 20);
         g.drawString("SCORE: " + peli.getPisteet(), peliruudukko.getLEVEYS() * sivunPituus + 10, 40);
         if (!peli.jatkuu()) {
-            g.drawString("GAME OVER", peliruudukko.getLEVEYS()*sivunPituus+10, 60);
+            g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus + 10, 60);
         }
     }
 
