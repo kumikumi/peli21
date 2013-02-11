@@ -37,7 +37,8 @@ public class Kayttoliittyma implements Runnable {
     public void run() {
 
         frame = new JFrame("Peli 21");
-        paivitaKoko();
+        frame.setPreferredSize(new Dimension(640, 520));
+        frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         luoKomponentit(frame.getContentPane());
         frame.setVisible(true);

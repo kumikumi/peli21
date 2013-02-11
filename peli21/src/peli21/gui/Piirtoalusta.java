@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import peli21.Suunta;
@@ -34,11 +36,11 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private Pelihahmo pelihahmo;
     private Font font;
     private Map<Suunta, Image> kuvat;
+    private Image splashKuva;
 
     public Piirtoalusta(Peli peli, int palanSivunPituus) {
         this.peli = peli;
         this.sivunPituus = palanSivunPituus;
-        this.paivitaKomponentit();
         this.font = new Font("Serif", Font.PLAIN, 16);
         this.kuvat = new EnumMap<Suunta, Image>(Suunta.class);
         lataaKuvat();
@@ -46,6 +48,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
 
     private void lataaKuvat() {
         try {
+            splashKuva = ImageIO.read(this.getClass().getResource("/splash.png"));
             kuvat.put(Suunta.YLOS, ImageIO.read(this.getClass().getResource("/up.png")));
             kuvat.put(Suunta.ALAS, ImageIO.read(this.getClass().getResource("/down.png")));
             kuvat.put(Suunta.OIKEA, ImageIO.read(this.getClass().getResource("/right.png")));
@@ -61,6 +64,10 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
 
     @Override
     public void paintComponent(Graphics g) {
+        if (!peli.isAlkanut()) {
+            g.drawImage(splashKuva, 0, 0, this);
+            return;
+        }
         super.paintComponent(g);
         g.setColor(Color.BLACK);
         for (int x = 0; x < peliruudukko.getLEVEYS(); x++) {
@@ -87,6 +94,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     /**
      * Tätä metodia pitää kutsua joka kerta, kun uusi peli on käynnistetty.
      */
+    @Override
     public void paivitaKomponentit() {
         this.peliruudukko = peli.getRuudukko();
         this.taulukko = peliruudukko.getTaulukko();

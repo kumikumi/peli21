@@ -9,11 +9,9 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import peli21.Effect;
 import peli21.Suunta;
-//import peli21.domain.Pelihahmo;
 import peli21.domain.Ruudukko;
 import peli21.gui.Paivitettava;
 import peli21.highscore.Highscorelista;
-//import peli21.gui.Piirtoalusta;
 
 /**
  * Tämä luokka huolehtii pelin hallinnoimisesta ja pisteidenlaskusta. Luokka
@@ -26,10 +24,9 @@ import peli21.highscore.Highscorelista;
  */
 public class Peli implements ActionListener {
 
-    private int leveys;
-    private int korkeus;
     private Highscorelista highscorelista;
     private String pelaajanNimi;
+    private boolean alkanut;
     private boolean jatkuu;
     private Timer ajastin;
     private int pistelaskuri;
@@ -46,20 +43,16 @@ public class Peli implements ActionListener {
      * @param leveys Luotavan ruudukon leveys (ruutuina).
      * @param korkeus Luotavan ruudukon korkeus (ruutuina).
      */
-    public Peli(String pelaajanNimi, int leveys, int korkeus) {
-        this.ajastin = new Timer(1000, null);
-        ajastin.setInitialDelay(2000);
+    public Peli() {
+        //this.ajastin = new Timer(1000, null);
+        //ajastin.setInitialDelay(2000);
         //ajastin.addActionListener(this);
-        this.leveys = leveys;
-        this.korkeus = korkeus;
-        this.pelaajanNimi = pelaajanNimi;
-        this.jatkuu = true;
-        this.ruudukko = new Ruudukko(leveys, korkeus);
-        this.pistelaskuri = 0;
+        this.alkanut = false;
         this.highscorelista = new Highscorelista(10);
     }
 
     public void uusiPeli(String pelaajanNimi, int leveys, int korkeus) {
+        this.alkanut = true;
         this.pelaajanNimi = pelaajanNimi;
         this.pistelaskuri = 0;
         this.ruudukko = new Ruudukko(leveys, korkeus);
@@ -71,6 +64,10 @@ public class Peli implements ActionListener {
     public Ruudukko getRuudukko() {
         return this.ruudukko;
     }
+    
+    public boolean isAlkanut() {
+        return this.alkanut;
+    }
 
     public boolean jatkuu() {
         return this.jatkuu;
@@ -79,6 +76,7 @@ public class Peli implements ActionListener {
     public String getPelaajanNimi() {
         return this.pelaajanNimi;
     }
+
     public void setPaivitettava(Paivitettava piirtoalusta) {
         this.paivitettava = piirtoalusta;
     }
