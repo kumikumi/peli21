@@ -43,7 +43,7 @@ public class Ruutu {
      * Asettaa suunnan <code>suunta</code> tilaksi <code>tila</code>.
      * 
      * 
-     * @param suunta
+     * @param suunta Suunta saadaan <code>Suunta-luokasta</code> ja voi olla <code>Suunta.YLOS</code>, <code>Suunta.ALAS</code>, <code>Suunta.VASEN</code> tai <code>Suunta.OIKEA</code>.
      * @param tila 
      */
     public void setSuunta(Suunta suunta, boolean tila) {
@@ -64,7 +64,7 @@ public class Ruutu {
 
     /**
      * Palauttaa tiedon parametrina annetun suunnan <suunta> tilasta.
-     * @param suunta Suunta saadaan Suunta-luokasta ja voi olla Suunta.YLOS, Suunta.ALAS, Suunta.VASEN tai Suunta.OIKEA.
+     * @param suunta Suunta saadaan <code>Suunta-luokasta</code> ja voi olla <code>Suunta.YLOS</code>, <code>Suunta.ALAS</code>, <code>Suunta.VASEN</code> tai <code>Suunta.OIKEA</code>.
      * @return Boolean-tyyppinen tieto parametrina annetun suunnan tilasta.
      */
     public boolean isSuunta(Suunta suunta) {

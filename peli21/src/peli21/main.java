@@ -25,7 +25,7 @@ public class main {
         // TODO code application logic here     
         System.out.println("Seisotte nyt paikalla, johon on hyvää vauhtia valmistumassa eeppinen ruudukkopeli.");
 
-        Peli ruudukkopeli = new Peli();
+        Peli ruudukkopeli = new Peli("src/highscore");
         Kayttoliittyma gui = new Kayttoliittyma(ruudukkopeli, 40);
         SwingUtilities.invokeLater(gui);
         while (gui.getPiirtoalusta() == null) {
@@ -35,7 +35,6 @@ public class main {
                 System.out.println("Piirtoalustaa ei ole vielä luotu.");
             }
         }
-        //ruudukkopeli.setPaivitettava(new SplashScreen());
         ruudukkopeli.setPaivitettava(gui.getPiirtoalusta());
     }
 }

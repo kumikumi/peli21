@@ -33,5 +33,29 @@ public class Tulos implements Comparable<Tulos>{
         return t.getPisteet() - this.pisteet;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Tulos other = (Tulos) obj;
+        if ((this.nimi == null) ? (other.nimi != null) : !this.nimi.equals(other.nimi)) {
+            return false;
+        }
+        if (this.pisteet != other.pisteet) {
+            return false;
+        }
+        return true;
+    }
+
 
 }

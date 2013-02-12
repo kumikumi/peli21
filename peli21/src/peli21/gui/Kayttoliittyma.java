@@ -14,8 +14,7 @@ import javax.swing.WindowConstants;
 import peli21.peli.Peli;
 
 /**
- *
- * @author mikko
+ * Käyttöliittymäluokka, joka luo pelin pääikkunana käytettävän JFrame-olion, asettaa sille koon ja luo siihen piirrettävät komponentit.
  */
 public class Kayttoliittyma implements Runnable {
 
@@ -24,6 +23,11 @@ public class Kayttoliittyma implements Runnable {
     private int sivunPituus;
     private Piirtoalusta piirtoalusta;
 
+    /**
+     * Konstruktorissa Kayttoliittyma saa pelinä käytettävän <code>Peli</code>-olion sekä tiedon yhden peliruudun sivun pituudesta.
+     * @param peli
+     * @param sivunPituus 
+     */
     public Kayttoliittyma(Peli peli, int sivunPituus) {
         this.peli = peli;
         this.sivunPituus = sivunPituus;
@@ -33,9 +37,11 @@ public class Kayttoliittyma implements Runnable {
         return this.piirtoalusta;
     }
 
+    /**
+     * Runnable-rajapinnan toteuttamiseen vaadittu metodi, jossa luodaan peli-ikkuna.
+     */
     @Override
     public void run() {
-
         frame = new JFrame("Peli 21");
         frame.setPreferredSize(new Dimension(640, 520));
         frame.pack();
@@ -44,6 +50,9 @@ public class Kayttoliittyma implements Runnable {
         frame.setVisible(true);
     }
 
+    /**
+     * Päivittää ikkunan koon vastaamaan pelin ruudukon mittoja.
+     */
     public void paivitaKoko() {
         int leveys = (peli.getRuudukko().getLEVEYS()) * sivunPituus + 120;
         int korkeus = (peli.getRuudukko().getKORKEUS() + 1) * sivunPituus + 10;

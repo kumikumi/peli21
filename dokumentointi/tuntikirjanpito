@@ -10,3 +10,4 @@
 08.02.13 | 1 | Pientä refaktorointia ja javadocin päivittelyä.
 09.02.13 | 3 | Sisällytettiin kuvat jar-tiedostoon ja muokattiin kuvanlatauskoodia. Lisättiin New Game-nappi yläpalkkiin.
 11.02.13 | 2 | Lisättiin splash-screen ja refaktoroitiin hieman koodia. Peli ei nyt ala automaattisesti vaan se pitää käynnistää yläpalkista.
+12.02.13 | 3 | Tehtiin parempia testejä ja piirreltiin sekvenssikaavioita.

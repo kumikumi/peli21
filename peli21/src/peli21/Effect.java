@@ -5,8 +5,8 @@
 package peli21;
 
 /**
- *
- * @author mikko
+ * Yksinkertainen enum siirtojen seurausten kuvailemiseen.
+ * 
  */
 public enum Effect {
     SUCCESS, BONUS, DEATH;

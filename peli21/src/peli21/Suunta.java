@@ -5,8 +5,7 @@
 package peli21;
 
 /**
- *
- * @author mikko
+ * Yksinkertainen enum suuntien kuvaamiseen.
  */
 public enum Suunta {
     YLOS,

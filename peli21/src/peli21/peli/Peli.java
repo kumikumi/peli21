@@ -35,22 +35,28 @@ public class Peli implements ActionListener {
     //private Pelihahmo pelaaja;
 
     /**
-     * Konstruktorissa pelille tulee antaa tieto pelaajan nimestä ja
-     * peliruudukolle annettavat mitat. Näitä mittoja käytetään sopivan
+     * Konstruktorissa pelille tulee antaa tiedostopolun osoite, johon
+     * highscorelista tallennetaan.
+     *
+     * @param tiedostopolku Tallennettavan highscorelistan relatiivinen tiedostopolku.
+     */
+    public Peli(String tiedostopolku) {
+        //this.ajastin = new Timer(1000, null);
+        //ajastin.setInitialDelay(2000);
+        //ajastin.addActionListener(this);
+        this.alkanut = false;
+        this.highscorelista = new Highscorelista(10, tiedostopolku);
+    }
+
+    /**
+     * Metodille annetaan parametreina tieto pelaajan nimestä ja peliruudukolle
+     * annettavat mitat. Näitä mittoja käytetään sopivan
      * <code>Ruudukko</code>-olion luomiseen.
      *
      * @param pelaajanNimi Pelaajalle annettava nimi.
      * @param leveys Luotavan ruudukon leveys (ruutuina).
      * @param korkeus Luotavan ruudukon korkeus (ruutuina).
      */
-    public Peli() {
-        //this.ajastin = new Timer(1000, null);
-        //ajastin.setInitialDelay(2000);
-        //ajastin.addActionListener(this);
-        this.alkanut = false;
-        this.highscorelista = new Highscorelista(10);
-    }
-
     public void uusiPeli(String pelaajanNimi, int leveys, int korkeus) {
         this.alkanut = true;
         this.pelaajanNimi = pelaajanNimi;
@@ -64,11 +70,17 @@ public class Peli implements ActionListener {
     public Ruudukko getRuudukko() {
         return this.ruudukko;
     }
-    
+
+    /**
+     * @return Palauttaa <code>true</code> sen jälkeen, kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen kerran.
+     */
     public boolean isAlkanut() {
         return this.alkanut;
     }
 
+    /**
+     * @return Palauttaa <code>true</code> silloin, kun peli on käynnissä. Muutoin palautetaan false. (Peli loppuu, kun pelaaja tekee laittoman siirron.)
+     */
     public boolean jatkuu() {
         return this.jatkuu;
     }
@@ -89,7 +101,7 @@ public class Peli implements ActionListener {
      * pistemäärää yhdellä tai lopettaa pelin. Jos peli on jo päättynyt, siirtoa
      * ei tehdä.
      *
-     * @param suunta
+     * @param suunta Suunta, johon pelaajaa liikutetaan.
      */
     public void liikutaPelaajaa(Suunta suunta) {
         if (!jatkuu) {
