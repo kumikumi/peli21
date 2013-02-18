@@ -36,7 +36,20 @@ public class Ruudukko {
                 taulukko[x][y] = new Ruutu(true, true, true, true);
             }
         }
+        poistaReunat();
     }
+    
+    private void poistaReunat() {
+        for (int x = 0; x<this.LEVEYS; x++) {
+            taulukko[x][0].setSuunta(Suunta.ALAS, false);
+            taulukko[x][KORKEUS-1].setSuunta(Suunta.YLOS, false);
+        }
+        for (int y = 0; y<this.KORKEUS; y++) {
+            taulukko[0][y].setSuunta(Suunta.OIKEA, false);
+            taulukko[LEVEYS-1][y].setSuunta(Suunta.VASEN, false);
+        }
+    }
+    
     public Ruutu[][] getTaulukko() {
         return taulukko;
     }
