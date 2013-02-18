@@ -67,6 +67,12 @@ public class UusiPeliKuuntelija implements ActionListener {
                 } else {
                     name = nameField.getText();
                 }
+                
+                if (Integer.parseInt(timeField.getText()) <= 0) {
+                        JOptionPane.showMessageDialog(frame, "How about no");
+                        return;
+                }
+                
                 // Tehdään uusi peli
                 peli.uusiPeli(name, Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()), Integer.parseInt(timeField.getText()));
                 kali.paivitaKoko();
