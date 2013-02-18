@@ -26,7 +26,7 @@ public class main {
         System.out.println("Seisotte nyt paikalla, johon on hyvää vauhtia valmistumassa eeppinen ruudukkopeli.");
 
         Peli ruudukkopeli = new Peli("src/highscore");
-        Kayttoliittyma gui = new Kayttoliittyma(ruudukkopeli, 40);
+        Kayttoliittyma gui = new Kayttoliittyma(ruudukkopeli, 60);
         SwingUtilities.invokeLater(gui);
         while (gui.getPiirtoalusta() == null) {
             try {

@@ -31,8 +31,8 @@ public class UusiPeliKuuntelija implements ActionListener {
         this.peli = peli;
         this.kali = kali;
         this.nameText = "";
-        this.widthText = "20";
-        this.heightText = "10";
+        this.widthText = "10";
+        this.heightText = "6";
         this.timeText = "20";
     }
 

@@ -76,7 +76,11 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     }
 
     private void piirraRuudukko(Graphics g) {
+        if (peli.getBonusLaskuri() > 0 && peli.jatkuu()) {
+            g.setColor(new Color(0x050050));
+        } else {
         g.setColor(Color.BLACK);
+        }
         for (int x = 0; x < peliruudukko.getLEVEYS(); x++) {
             for (int y = 0; y < peliruudukko.getKORKEUS(); y++) {
                 g.fill3DRect(x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, true);
@@ -110,7 +114,15 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         //g.drawString("TIME: " + peli.getAika(), peliruudukko.getLEVEYS()*sivunPituus + 10, 60);
         g.drawString("TIME: ", peliruudukko.getLEVEYS() * sivunPituus + 10, 60);
         g.fill3DRect(peliruudukko.getLEVEYS() * sivunPituus + 10, 70, peli.getAika() * 100 / maksimiaika, 10, true);
+        if (peli.getBonusLaskuri()>0) {
+            g.setColor(Color.blue);
+            g.drawString("BONUS: ", peliruudukko.getLEVEYS() * sivunPituus + 10, 100);
+            g.fill3DRect(peliruudukko.getLEVEYS() * sivunPituus + 10, 110, peli.getBonusLaskuri()*2, 10, true);
+        }
+        
+        
         if (!peli.jatkuu()) {
+            g.setColor(Color.red);
             g.setFont(new Font("Sans", Font.PLAIN, 60));
             g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus / 2 - 150, peliruudukko.getKORKEUS() * sivunPituus / 2);
         }

@@ -31,7 +31,8 @@ public class Peli implements ActionListener {
     private Timer ajastin;
     private int oletusaika;
     private int aika;
-    private int pistelaskuri;
+    private int bonuslaskuri;
+    private int pisteet;
     private Ruudukko ruudukko;
     private Paivitettava paivitettava;
     //private Pelihahmo pelaaja;
@@ -61,7 +62,8 @@ public class Peli implements ActionListener {
     public void uusiPeli(String pelaajanNimi, int leveys, int korkeus, int aika) {
         this.alkanut = true;
         this.pelaajanNimi = pelaajanNimi;
-        this.pistelaskuri = 0;
+        this.pisteet = 0;
+        this.bonuslaskuri = 0;
         this.ruudukko = new Ruudukko(leveys, korkeus);
         this.oletusaika = aika;
         this.aika = aika;
@@ -74,7 +76,7 @@ public class Peli implements ActionListener {
     private void lopetaPeli() {
         this.ajastin.stop();
         jatkuu = false;
-        highscorelista.lisaa(pelaajanNimi, pistelaskuri);
+        highscorelista.lisaa(pelaajanNimi, pisteet);
         highscorelista.tulosta();
     }
 
@@ -83,7 +85,8 @@ public class Peli implements ActionListener {
     }
 
     /**
-     * @return Palauttaa <code>true</code> sen jälkeen,      * kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen kerran.
+     * @return Palauttaa <code>true</code> sen jälkeen,      * kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen
+     * kerran.
      */
     public boolean isAlkanut() {
         return this.alkanut;
@@ -126,23 +129,44 @@ public class Peli implements ActionListener {
             return;
         }
         System.out.println(ruudukko.getPelaaja());
-        System.out.println("Pisteet: " + pistelaskuri);
+        System.out.println("Pisteet: " + pisteet);
     }
 
     private void reagoiPalautukseen(Tila e) {
         switch (e) {
+            case BONUS:
+                //Jos pelaaja sai bonuksen, alaspäin laskeva bonuslaskuri laitetaan täyteen (50).
+                //Bonuksesta saa lisäksi 8+2 pistettä.
+                bonuslaskuri = 50;
+                pisteet += 8;
+                
+                //Tämän lisäksi tapahtuvat "ON"-tilaa koskevat asiat:
             case ON:
-                pistelaskuri++;
-                aika = oletusaika;
+                if (bonuslaskuri > 0) {
+                    pisteet = pisteet + 2; //Jos bonus on päällä, tavalliset pisteet tulevat kaksinkertaisena.
+                    aika = oletusaika; //Jos bonus on päällä, niin ajan saa joka siirrosta täyteen.
+                } else {
+                    pisteet++;
+                    if (aika+aika/2 > oletusaika) {
+                        aika = oletusaika;
+                    } else {
+                        aika+=aika/2; //Jos ollaan normaalitilassa, aika 1.5-kertaistuu joka onnistuneesta siirrosta.
+                        //aika += (oletusaika - aika) / 2; //Toinen vaihtoehto olis että aika täytetään puoliksi.
+                    }
+                }
                 break;
-            case OFF:
-                System.out.println("DEATH");
-                lopetaPeli();
+            case OFF: //Ahaa! Pelaaja on töpeksinyt
+                if (bonuslaskuri > 0) { //Jos bonusta oli, otetaan se pois
+                    bonuslaskuri = 0;
+                } else { // Muussa tapauksessa kaveri potkaisee tyhjää
+                    System.out.println("DEATH");
+                    lopetaPeli();
+                }
         }
     }
 
     public int getPisteet() {
-        return this.pistelaskuri;
+        return this.pisteet;
     }
 
     public int getAika() {
@@ -153,16 +177,28 @@ public class Peli implements ActionListener {
         return this.oletusaika;
     }
 
+    public int getBonusLaskuri() {
+        return this.bonuslaskuri;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!jatkuu) {
             return;
         }
+        if (bonuslaskuri > 0) {
+            bonuslaskuri--;
+        }
         // @TODO: Timer logic here
         aika--;
         this.paivitettava.paivita();
         if (aika == 0) {
+            if (bonuslaskuri > 0) {
+                aika = oletusaika*3/4;
+                bonuslaskuri = 0;
+            } else {
             this.lopetaPeli();
+            }
         }
     }
 }
