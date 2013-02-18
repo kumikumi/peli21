@@ -33,6 +33,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private Font font;
     private Map<Suunta, Image> kuvat;
     private Image splashKuva;
+    private Image tausta;
     private int maksimiaika;
 
     public Piirtoalusta(Peli peli, int palanSivunPituus) {
@@ -46,10 +47,11 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private void lataaKuvat() {
         try {
             splashKuva = ImageIO.read(this.getClass().getResource("/splash.png"));
-            kuvat.put(Suunta.YLOS, ImageIO.read(this.getClass().getResource("/up.png")));
-            kuvat.put(Suunta.ALAS, ImageIO.read(this.getClass().getResource("/down.png")));
-            kuvat.put(Suunta.OIKEA, ImageIO.read(this.getClass().getResource("/right.png")));
-            kuvat.put(Suunta.VASEN, ImageIO.read(this.getClass().getResource("/left.png")));
+            tausta = ImageIO.read((this.getClass().getResource("/background.png")));
+            kuvat.put(Suunta.YLOS, ImageIO.read(this.getClass().getResource("/up_new.png")));
+            kuvat.put(Suunta.ALAS, ImageIO.read(this.getClass().getResource("/down_new.png")));
+            kuvat.put(Suunta.OIKEA, ImageIO.read(this.getClass().getResource("/right_new.png")));
+            kuvat.put(Suunta.VASEN, ImageIO.read(this.getClass().getResource("/left_new.png")));
 //          kuvat.put(Suunta.YLOS, ImageIO.read(new File("img/up_a.png")));
 //          kuvat.put(Suunta.ALAS, ImageIO.read(new File("img/down_a.png")));
 //          kuvat.put(Suunta.OIKEA, ImageIO.read(new File("img/right_a.png")));
@@ -76,6 +78,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         for (int x = 0; x < peliruudukko.getLEVEYS(); x++) {
             for (int y = 0; y < peliruudukko.getKORKEUS(); y++) {
                 g.fill3DRect(x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, true);
+                g.drawImage(tausta, x * sivunPituus, y * sivunPituus, this);
                 for (Suunta s : kuvat.keySet()) {
                     if (taulukko[x][y].isSuunta(s)) {
                         g.drawImage(kuvat.get(s), x * sivunPituus, y * sivunPituus, this);
@@ -95,10 +98,11 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         g.drawString(peli.getPelaajanNimi(), peliruudukko.getLEVEYS() * sivunPituus + 10, 20);
         g.drawString("SCORE: " + peli.getPisteet(), peliruudukko.getLEVEYS() * sivunPituus + 10, 40);
         //g.drawString("TIME: " + peli.getAika(), peliruudukko.getLEVEYS()*sivunPituus + 10, 60);
-        g.drawString("TIME: ", peliruudukko.getLEVEYS()*sivunPituus + 10, 60);
-        g.drawRect(peliruudukko.getLEVEYS()*sivunPituus+10, 70, peli.getAika()*100/maksimiaika, 10);
+        g.drawString("TIME: ", peliruudukko.getLEVEYS() * sivunPituus + 10, 60);
+        g.fill3DRect(peliruudukko.getLEVEYS() * sivunPituus + 10, 70, peli.getAika() * 100 / maksimiaika, 10, true);
         if (!peli.jatkuu()) {
-            g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus + 10, 100);
+            g.setFont(new Font("Sans", Font.PLAIN, 60));
+            g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus/2 -150, peliruudukko.getKORKEUS()*sivunPituus/2);
         }
     }
 
