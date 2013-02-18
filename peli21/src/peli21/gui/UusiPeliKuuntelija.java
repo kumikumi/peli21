@@ -24,19 +24,26 @@ public class UusiPeliKuuntelija implements ActionListener {
     private Peli peli;
     private Kayttoliittyma kali;
     private Component frame;
+    private String nimi;
+    private String width;
+    private String height;
 
     public UusiPeliKuuntelija(Peli peli, Kayttoliittyma kali) {
         this.peli = peli;
         this.kali = kali;
+        this.nimi = "";
+        this.width = "20";
+        this.height = "10";
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
       JTextField xField = new JTextField(5);
-      xField.setText("20");
+      xField.setText(width);
       JTextField yField = new JTextField(5);
-      yField.setText("10");
+      yField.setText(height);
       JTextField nameField = new JTextField(10);
+      nameField.setText(nimi);
       JPanel myPanel = new JPanel();
       myPanel.add(new JLabel("Width:"));
       myPanel.add(xField);
@@ -49,14 +56,17 @@ public class UusiPeliKuuntelija implements ActionListener {
                "New Game", JOptionPane.OK_CANCEL_OPTION);
       if (result == JOptionPane.OK_OPTION) {
          try {
-             String nimi;
+             String name;
         if (nameField.getText().isEmpty()) {
-            nimi = "Anonymous";
+            name = "Anonymous";
         } else {
-            nimi = nameField.getText();
+            name = nameField.getText();
         }
-        peli.uusiPeli(nimi, Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()));
+        peli.uusiPeli(name, Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()));
         kali.paivitaKoko();
+        nimi = name;
+        width = xField.getText();
+        height = yField.getText();
          } catch (Exception e) {
              JOptionPane.showMessageDialog(frame, "Wtf?");
          }
