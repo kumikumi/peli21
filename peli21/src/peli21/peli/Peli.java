@@ -29,6 +29,8 @@ public class Peli implements ActionListener {
     private boolean alkanut;
     private boolean jatkuu;
     private Timer ajastin;
+    private int oletusaika;
+    private int aika;
     private int pistelaskuri;
     private Ruudukko ruudukko;
     private Paivitettava paivitettava;
@@ -38,12 +40,11 @@ public class Peli implements ActionListener {
      * Konstruktorissa pelille tulee antaa tiedostopolun osoite, johon
      * highscorelista tallennetaan.
      *
-     * @param tiedostopolku Tallennettavan highscorelistan relatiivinen tiedostopolku.
+     * @param tiedostopolku Tallennettavan highscorelistan relatiivinen
+     * tiedostopolku.
      */
     public Peli(String tiedostopolku) {
-        //this.ajastin = new Timer(1000, null);
-        //ajastin.setInitialDelay(2000);
-        //ajastin.addActionListener(this);
+        this.ajastin = new Timer(100, this);
         this.alkanut = false;
         this.highscorelista = new Highscorelista(10, tiedostopolku);
     }
@@ -57,14 +58,24 @@ public class Peli implements ActionListener {
      * @param leveys Luotavan ruudukon leveys (ruutuina).
      * @param korkeus Luotavan ruudukon korkeus (ruutuina).
      */
-    public void uusiPeli(String pelaajanNimi, int leveys, int korkeus) {
+    public void uusiPeli(String pelaajanNimi, int leveys, int korkeus, int aika) {
         this.alkanut = true;
         this.pelaajanNimi = pelaajanNimi;
         this.pistelaskuri = 0;
         this.ruudukko = new Ruudukko(leveys, korkeus);
+        this.oletusaika = aika;
+        this.aika = aika;
         this.paivitettava.paivitaKomponentit();
         this.paivitettava.paivita();
         this.jatkuu = true;
+        this.ajastin.start();
+    }
+
+    private void lopetaPeli() {
+        this.ajastin.stop();
+        jatkuu = false;
+        highscorelista.lisaa(pelaajanNimi, pistelaskuri);
+        highscorelista.tulosta();
     }
 
     public Ruudukko getRuudukko() {
@@ -72,14 +83,16 @@ public class Peli implements ActionListener {
     }
 
     /**
-     * @return Palauttaa <code>true</code> sen jälkeen, kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen kerran.
+     * @return Palauttaa <code>true</code> sen jälkeen,      * kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen kerran.
      */
     public boolean isAlkanut() {
         return this.alkanut;
     }
 
     /**
-     * @return Palauttaa <code>true</code> silloin, kun peli on käynnissä. Muutoin palautetaan false. (Peli loppuu, kun pelaaja tekee laittoman siirron.)
+     * @return Palauttaa <code>true</code> silloin, kun peli on käynnissä.
+     * Muutoin palautetaan false. (Peli loppuu, kun pelaaja tekee laittoman
+     * siirron.)
      */
     public boolean jatkuu() {
         return this.jatkuu;
@@ -120,17 +133,24 @@ public class Peli implements ActionListener {
         switch (e) {
             case SUCCESS:
                 pistelaskuri++;
+                aika = oletusaika;
                 break;
             case DEATH:
                 System.out.println("DEATH");
-                jatkuu = false;
-                highscorelista.lisaa(pelaajanNimi, pistelaskuri);
-                highscorelista.tulosta();
+                lopetaPeli();
         }
     }
 
     public int getPisteet() {
         return this.pistelaskuri;
+    }
+
+    public int getAika() {
+        return this.aika;
+    }
+
+    public int getOletusAika() {
+        return this.oletusaika;
     }
 
     @Override
@@ -139,7 +159,10 @@ public class Peli implements ActionListener {
             return;
         }
         // @TODO: Timer logic here
-        pistelaskuri++;
-
+        aika--;
+        this.paivitettava.paivita();
+        if (aika == 0) {
+            this.lopetaPeli();
+        }
     }
 }

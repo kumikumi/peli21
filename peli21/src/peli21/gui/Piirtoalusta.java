@@ -33,6 +33,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private Font font;
     private Map<Suunta, Image> kuvat;
     private Image splashKuva;
+    private int maksimiaika;
 
     public Piirtoalusta(Peli peli, int palanSivunPituus) {
         this.peli = peli;
@@ -65,6 +66,12 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
             return;
         }
         super.paintComponent(g);
+        piirraRuudukko(g);
+        piirraPelihahmo(g);
+        piirraHud(g);
+    }
+
+    private void piirraRuudukko(Graphics g) {
         g.setColor(Color.BLACK);
         for (int x = 0; x < peliruudukko.getLEVEYS(); x++) {
             for (int y = 0; y < peliruudukko.getKORKEUS(); y++) {
@@ -76,14 +83,22 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
                 }
             }
         }
+    }
 
+    private void piirraPelihahmo(Graphics g) {
         g.setColor(Color.RED);
         g.fillOval(pelihahmo.getX() * sivunPituus, pelihahmo.getY() * sivunPituus, sivunPituus, sivunPituus);
+    }
+
+    private void piirraHud(Graphics g) {
         g.setFont(font);
         g.drawString(peli.getPelaajanNimi(), peliruudukko.getLEVEYS() * sivunPituus + 10, 20);
         g.drawString("SCORE: " + peli.getPisteet(), peliruudukko.getLEVEYS() * sivunPituus + 10, 40);
+        //g.drawString("TIME: " + peli.getAika(), peliruudukko.getLEVEYS()*sivunPituus + 10, 60);
+        g.drawString("TIME: ", peliruudukko.getLEVEYS()*sivunPituus + 10, 60);
+        g.drawRect(peliruudukko.getLEVEYS()*sivunPituus+10, 70, peli.getAika()*100/maksimiaika, 10);
         if (!peli.jatkuu()) {
-            g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus + 10, 60);
+            g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus + 10, 100);
         }
     }
 
@@ -95,6 +110,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         this.peliruudukko = peli.getRuudukko();
         this.taulukko = peliruudukko.getTaulukko();
         this.pelihahmo = peliruudukko.getPelaaja();
+        this.maksimiaika = peli.getOletusAika();
     }
 
     @Override
