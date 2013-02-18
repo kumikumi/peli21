@@ -62,26 +62,26 @@ public class PeliTest {
 
     @Test
     public void alkanutKunAloitetaanUusiPeli() {
-        ruudukkopeli.uusiPeli("Spiderman", 10, 10);
+        ruudukkopeli.uusiPeli("Spiderman", 10, 10, 20);
         assertEquals(true, ruudukkopeli.isAlkanut());
     }
 
     @Test
     public void jatkuuKunAloitetaanUusiPeli() {
-        ruudukkopeli.uusiPeli("Sirpa", 10, 10);
+        ruudukkopeli.uusiPeli("Sirpa", 10, 10, 20);
         assertEquals(true, ruudukkopeli.jatkuu());
     }
 
     @Test
     public void ruudukonKokoAlussaOikea() {
-        ruudukkopeli.uusiPeli("Testaaja", 20, 15);
+        ruudukkopeli.uusiPeli("Testaaja", 20, 15, 20);
         assertEquals(20, ruudukkopeli.getRuudukko().getLEVEYS());
         assertEquals(15, ruudukkopeli.getRuudukko().getKORKEUS());
     }
 
     @Test
     public void pelaajanLiikutteluToimii() {
-        ruudukkopeli.uusiPeli("Batman", 10, 10);
+        ruudukkopeli.uusiPeli("Batman", 10, 10, 20);
         ruudukkopeli.liikutaPelaajaa(Suunta.YLOS);
         ruudukkopeli.liikutaPelaajaa(Suunta.VASEN);
         ruudukkopeli.liikutaPelaajaa(Suunta.YLOS);
@@ -95,7 +95,7 @@ public class PeliTest {
 
     @Test
     public void pisteidenLaskuToimii() {
-        ruudukkopeli.uusiPeli("Oskari", 20, 20);
+        ruudukkopeli.uusiPeli("Oskari", 20, 20, 20);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
@@ -104,7 +104,7 @@ public class PeliTest {
 
     @Test
     public void peliLoppuuJosLaitonSiirto() {
-        ruudukkopeli.uusiPeli("Konnila", 10, 10);
+        ruudukkopeli.uusiPeli("Konnila", 10, 10, 20);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
         ruudukkopeli.liikutaPelaajaa(Suunta.VASEN);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);

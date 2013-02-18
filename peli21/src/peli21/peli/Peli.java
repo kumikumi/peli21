@@ -7,7 +7,7 @@ package peli21.peli;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
-import peli21.Effect;
+import peli21.Tila;
 import peli21.Suunta;
 import peli21.domain.Ruudukko;
 import peli21.gui.Paivitettava;
@@ -129,13 +129,13 @@ public class Peli implements ActionListener {
         System.out.println("Pisteet: " + pistelaskuri);
     }
 
-    private void reagoiPalautukseen(Effect e) {
+    private void reagoiPalautukseen(Tila e) {
         switch (e) {
-            case SUCCESS:
+            case ON:
                 pistelaskuri++;
                 aika = oletusaika;
                 break;
-            case DEATH:
+            case OFF:
                 System.out.println("DEATH");
                 lopetaPeli();
         }

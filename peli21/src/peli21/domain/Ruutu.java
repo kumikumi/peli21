@@ -4,18 +4,19 @@
  */
 package peli21.domain;
 
+import peli21.Tila;
 import peli21.Suunta;
 
 /**
- * Ruudulla on neljä boolean-tyyppistä muuttujaa <code>up</code>, <code>down</code>, <code>left</code>, <code>right</code>,
+ * Ruudulla on neljä <code>Tila</code>-tyyppistä muuttujaa <code>up</code>, <code>down</code>, <code>left</code>, <code>right</code>,
  * jotka ilmaisevat, voiko ruutuun siirtyä liikkumalla kyseisen muuttujan ilmaisemaan suuntaan.
  */
 public class Ruutu {
 
-    private boolean up;
-    private boolean down;
-    private boolean left;
-    private boolean right;
+    private Tila up;
+    private Tila down;
+    private Tila left;
+    private Tila right;
 
 /**
  * Ruudun luonnin yhteydessä voidaan antaa eri suunnille tilat järjestyksessä <code>up</code>, <code>down</code>, <code>left</code>, <code>right</code>.
@@ -24,7 +25,7 @@ public class Ruutu {
  * @param left
  * @param right 
  */
-    public Ruutu(boolean up, boolean down, boolean left, boolean right) {
+    public Ruutu(Tila up, Tila down, Tila left, Tila right) {
         this.up = up;
         this.down = down;
         this.left = left;
@@ -32,10 +33,10 @@ public class Ruutu {
     }
 
     /**
-     * Oletusarvoisesti kaikki neljä suuntaa saavat arvokseen <code>false</code>.
+     * Oletusarvoisesti kaikki neljä suuntaa saavat arvokseen <code>Tila.OFF</code>.
      */
     public Ruutu() {
-        this(false, false, false, false);
+        this(Tila.OFF, Tila.OFF, Tila.OFF, Tila.OFF);
     }
 
     /**
@@ -43,10 +44,10 @@ public class Ruutu {
      * Asettaa suunnan <code>suunta</code> tilaksi <code>tila</code>.
      * 
      * 
-     * @param suunta Suunta saadaan <code>Suunta-luokasta</code> ja voi olla <code>Suunta.YLOS</code>, <code>Suunta.ALAS</code>, <code>Suunta.VASEN</code> tai <code>Suunta.OIKEA</code>.
-     * @param tila 
+     * @param suunta Suunta saadaan <code>Suunta</code>-luokasta ja voi olla <code>Suunta.YLOS</code>, <code>Suunta.ALAS</code>, <code>Suunta.VASEN</code> tai <code>Suunta.OIKEA</code>.
+     * @param tila Tila saadaan <code>Tila</code>-luokasta ja voi olla <code>Tila.OFF</code>, <code>Tila.ON</code> tai <code>Tila.BONUS</code>.
      */
-    public void setSuunta(Suunta suunta, boolean tila) {
+    public void setSuunta(Suunta suunta, Tila tila) {
         switch (suunta) {
             case YLOS:
                 this.up = tila;
@@ -63,11 +64,11 @@ public class Ruutu {
     }
 
     /**
-     * Palauttaa tiedon parametrina annetun suunnan <suunta> tilasta.
-     * @param suunta Suunta saadaan <code>Suunta-luokasta</code> ja voi olla <code>Suunta.YLOS</code>, <code>Suunta.ALAS</code>, <code>Suunta.VASEN</code> tai <code>Suunta.OIKEA</code>.
-     * @return Boolean-tyyppinen tieto parametrina annetun suunnan tilasta.
+     * Palauttaa tiedon parametrina annetun suunnan <code>suunta</code> tilasta.
+     * @param suunta Suunta saadaan <code>Suunta</code>-luokasta ja voi olla <code>Suunta.YLOS</code>, <code>Suunta.ALAS</code>, <code>Suunta.VASEN</code> tai <code>Suunta.OIKEA</code>.
+     * @return Tila-tyyppinen tieto parametrina annetun suunnan tilasta.
      */
-    public boolean isSuunta(Suunta suunta) {
+    public Tila getTila(Suunta suunta) {
         switch (suunta) {
             case YLOS:
                 return this.up;
@@ -78,6 +79,6 @@ public class Ruutu {
             case OIKEA:
                 return this.right;
         }
-        return false;
+        return Tila.OFF;
     }
 }

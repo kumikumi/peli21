@@ -32,6 +32,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private Pelihahmo pelihahmo;
     private Font font;
     private Map<Suunta, Image> kuvat;
+    private Map<Suunta, Image> bonuskuvat;
     private Image splashKuva;
     private Image tausta;
     private int maksimiaika;
@@ -41,6 +42,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         this.sivunPituus = palanSivunPituus;
         this.font = new Font("Serif", Font.PLAIN, 16);
         this.kuvat = new EnumMap<Suunta, Image>(Suunta.class);
+        this.bonuskuvat = new EnumMap<Suunta, Image>(Suunta.class);
         lataaKuvat();
     }
 
@@ -52,10 +54,10 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
             kuvat.put(Suunta.ALAS, ImageIO.read(this.getClass().getResource("/down_new.png")));
             kuvat.put(Suunta.OIKEA, ImageIO.read(this.getClass().getResource("/right_new.png")));
             kuvat.put(Suunta.VASEN, ImageIO.read(this.getClass().getResource("/left_new.png")));
-//          kuvat.put(Suunta.YLOS, ImageIO.read(new File("img/up_a.png")));
-//          kuvat.put(Suunta.ALAS, ImageIO.read(new File("img/down_a.png")));
-//          kuvat.put(Suunta.OIKEA, ImageIO.read(new File("img/right_a.png")));
-//          kuvat.put(Suunta.VASEN, ImageIO.read(new File("img/left_a.png")));
+            bonuskuvat.put(Suunta.YLOS, ImageIO.read(this.getClass().getResource("/up_bonus.png")));
+            bonuskuvat.put(Suunta.ALAS, ImageIO.read(this.getClass().getResource("/down_bonus.png")));
+            bonuskuvat.put(Suunta.OIKEA, ImageIO.read(this.getClass().getResource("/right_bonus.png")));
+            bonuskuvat.put(Suunta.VASEN, ImageIO.read(this.getClass().getResource("/left_bonus.png")));
         } catch (IOException ex) {
             System.out.println("asdf");
         }
@@ -78,11 +80,19 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         for (int x = 0; x < peliruudukko.getLEVEYS(); x++) {
             for (int y = 0; y < peliruudukko.getKORKEUS(); y++) {
                 g.fill3DRect(x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, true);
-                g.drawImage(tausta, x * sivunPituus, y * sivunPituus, this);
+                g.drawImage(tausta, x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, this);
                 for (Suunta s : kuvat.keySet()) {
-                    if (taulukko[x][y].isSuunta(s)) {
-                        g.drawImage(kuvat.get(s), x * sivunPituus, y * sivunPituus, this);
+                    switch (taulukko[x][y].getTila(s)) {
+                        case ON:
+                            g.drawImage(kuvat.get(s), x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, this);
+                            break;
+                        case BONUS:
+                            g.drawImage(bonuskuvat.get(s), x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, this);
                     }
+//                    if (taulukko[x][y].getSuunta(s)) {
+//                        //g.drawImage(kuvat.get(s), x * sivunPituus, y * sivunPituus, this);
+//                        g.drawImage(kuvat.get(s), x * sivunPituus, y * sivunPituus, sivunPituus, sivunPituus, this);
+//                    }
                 }
             }
         }
@@ -102,7 +112,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         g.fill3DRect(peliruudukko.getLEVEYS() * sivunPituus + 10, 70, peli.getAika() * 100 / maksimiaika, 10, true);
         if (!peli.jatkuu()) {
             g.setFont(new Font("Sans", Font.PLAIN, 60));
-            g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus/2 -150, peliruudukko.getKORKEUS()*sivunPituus/2);
+            g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus / 2 - 150, peliruudukko.getKORKEUS() * sivunPituus / 2);
         }
     }
 

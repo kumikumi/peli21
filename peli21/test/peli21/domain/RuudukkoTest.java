@@ -6,7 +6,7 @@ package peli21.domain;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import peli21.Effect;
+import peli21.Tila;
 import peli21.Suunta;
 
 /**
@@ -71,9 +71,9 @@ public class RuudukkoTest {
         pelilauta.liikutaPelaajaa(Suunta.OIKEA);
         pelilauta.liikutaPelaajaa(Suunta.OIKEA);
         pelilauta.liikutaPelaajaa(Suunta.OIKEA);
-        assertEquals(Effect.SUCCESS, pelilauta.liikutaPelaajaa(Suunta.OIKEA));
+        assertEquals(Tila.ON, pelilauta.liikutaPelaajaa(Suunta.OIKEA));
         assertEquals(19, pelilauta.getPelaaja().getX());
-        assertEquals(Effect.DEATH, pelilauta.liikutaPelaajaa(Suunta.OIKEA));
+        assertEquals(Tila.OFF, pelilauta.liikutaPelaajaa(Suunta.OIKEA));
         assertEquals(19, pelilauta.getPelaaja().getX());
     }
 }

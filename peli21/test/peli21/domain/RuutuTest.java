@@ -7,6 +7,7 @@ package peli21.domain;
 import org.junit.*;
 import static org.junit.Assert.*;
 import peli21.Suunta;
+import peli21.Tila;
 
 /**
  *
@@ -37,50 +38,50 @@ public class RuutuTest {
      * Testit alkaa tästä.
      */
     @Test
-    public void isDownAluksiFalse() {
+    public void AlasAluksiPoisPaalta() {
         Ruutu ruutu = new Ruutu();
-        assertEquals(false, ruutu.isSuunta(Suunta.ALAS));
+        assertEquals(Tila.OFF, ruutu.getTila(Suunta.ALAS));
     }
     @Test
-    public void isLeftAluksiFalse() {
+    public void VasenAluksiPoisPaalta() {
         Ruutu ruutu = new Ruutu();
-        assertEquals(false, ruutu.isSuunta(Suunta.VASEN));
+        assertEquals(Tila.OFF, ruutu.getTila(Suunta.VASEN));
     }
     @Test
-    public void isRightAluksiFalse() {
+    public void OikeaAluksiPoisPaalta() {
         Ruutu ruutu = new Ruutu();
-        assertEquals(false, ruutu.isSuunta(Suunta.OIKEA));
+        assertEquals(Tila.OFF, ruutu.getTila(Suunta.OIKEA));
     }
     @Test
-    public void isUpAluksiFalse() {
+    public void YlosAluksiPoisPaalta() {
         Ruutu ruutu = new Ruutu();
-        assertEquals(false, ruutu.isSuunta(Suunta.YLOS));
+        assertEquals(Tila.OFF, ruutu.getTila(Suunta.YLOS));
     }
     @Test
     public void setSuuntaAlasToimii() {
         Ruutu ruutu = new Ruutu();
-        ruutu.setSuunta(Suunta.ALAS, true);
-        assertEquals(true, ruutu.isSuunta(Suunta.ALAS));
+        ruutu.setSuunta(Suunta.ALAS, Tila.ON);
+        assertEquals(Tila.ON, ruutu.getTila(Suunta.ALAS));
     }
 
     @Test
     public void setSuuntaVasenToimii() {
         Ruutu ruutu = new Ruutu();
-        ruutu.setSuunta(Suunta.VASEN, true);
-        assertEquals(true, ruutu.isSuunta(Suunta.VASEN));
+        ruutu.setSuunta(Suunta.VASEN, Tila.ON);
+        assertEquals(Tila.ON, ruutu.getTila(Suunta.VASEN));
     }
 
     @Test
     public void setSuuntaOikeaToimii() {
         Ruutu ruutu = new Ruutu();
-        ruutu.setSuunta(Suunta.OIKEA, true);
-        assertEquals(true, ruutu.isSuunta(Suunta.OIKEA));
+        ruutu.setSuunta(Suunta.OIKEA, Tila.ON);
+        assertEquals(Tila.ON, ruutu.getTila(Suunta.OIKEA));
     }
 
     @Test
     public void setSuuntaYlosToimii() {
         Ruutu ruutu = new Ruutu();
-        ruutu.setSuunta(Suunta.YLOS, true);
-        assertEquals(true, ruutu.isSuunta(Suunta.YLOS));
+        ruutu.setSuunta(Suunta.YLOS, Tila.ON);
+        assertEquals(Tila.ON, ruutu.getTila(Suunta.YLOS));
     }
 }

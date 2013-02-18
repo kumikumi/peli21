@@ -4,7 +4,7 @@
  */
 package peli21.domain;
 
-import peli21.Effect;
+import peli21.Tila;
 import peli21.Suunta;
 /**
  *Ruudukko tuntee taulukollisen ruutuja ja pelihahmon. Ruudukko on vastuussa siirtojen toteuttamisesta, 
@@ -33,7 +33,7 @@ public class Ruudukko {
     private void alustaRuudut() {
         for (int y = 0; y < this.KORKEUS; y++) {
             for (int x = 0; x < this.LEVEYS; x++) {
-                taulukko[x][y] = new Ruutu(true, true, true, true);
+                taulukko[x][y] = new Ruutu(Tila.ON, Tila.ON, Tila.ON, Tila.ON);
             }
         }
         poistaReunat();
@@ -41,12 +41,12 @@ public class Ruudukko {
     
     private void poistaReunat() {
         for (int x = 0; x<this.LEVEYS; x++) {
-            taulukko[x][0].setSuunta(Suunta.ALAS, false);
-            taulukko[x][KORKEUS-1].setSuunta(Suunta.YLOS, false);
+            taulukko[x][0].setSuunta(Suunta.ALAS, Tila.OFF);
+            taulukko[x][KORKEUS-1].setSuunta(Suunta.YLOS, Tila.OFF);
         }
         for (int y = 0; y<this.KORKEUS; y++) {
-            taulukko[0][y].setSuunta(Suunta.OIKEA, false);
-            taulukko[LEVEYS-1][y].setSuunta(Suunta.VASEN, false);
+            taulukko[0][y].setSuunta(Suunta.OIKEA, Tila.OFF);
+            taulukko[LEVEYS-1][y].setSuunta(Suunta.VASEN, Tila.OFF);
         }
     }
     
@@ -75,18 +75,19 @@ public class Ruudukko {
     /**
      * Pelaajaa voi liikuttaa kerrallaan yhteen neljästä suunnasta. Ruudukko saattaa muuttua tätä metodia kutsuttaessa.
      * @param suunta Suunta, johon pelaajaa liikutetaan.
-     * @return Seuraus tehdylle siirrolle. Jos siirto oli laillinen, palautetaan <code>Effect.SUCCESS</code>.
-     * Jos siirto oli laiton, palautetaan <code>Effect.DEATH</code>.
+     * @return Kohderuudun tila sille suunnalle, johon liikuttiin. Tila saadaan <code>Tila</code>-luokasta ja voi olla <code>Tila.ON</code>, <code>Tila.OFF</code> tai <code>Tila.BONUS</code>. Jos yritettiin liikkua ulos ruudukosta, palautetaan <code>Tila.OFF</code> ja pelaaja siirretään takaisin.
+     *
      */
-    public Effect liikutaPelaajaa(Suunta suunta) {
+    public Tila liikutaPelaajaa(Suunta suunta) {
         // TODO: muuta ruudukkoa pelaajan liikkumisen yhteydessä
         pelaaja.liikuta(suunta);
-        if (this.pelaajaOnRuudukossa() && taulukko[pelaaja.getX()][pelaaja.getY()].isSuunta(suunta)){
-            taulukko[pelaaja.getX()][pelaaja.getY()].setSuunta(suunta, false);
-            return Effect.SUCCESS;
+        if (this.pelaajaOnRuudukossa()) {
+            Tila palautus = taulukko[pelaaja.getX()][pelaaja.getY()].getTila(suunta);
+            taulukko[pelaaja.getX()][pelaaja.getY()].setSuunta(suunta, Tila.OFF);
+            return palautus;
         }
         pelaaja.liikuta(suunta.vastakkainenSuunta());
-        return Effect.DEATH;
+        return Tila.OFF;
     }
 
     private boolean pelaajaOnRuudukossa() {

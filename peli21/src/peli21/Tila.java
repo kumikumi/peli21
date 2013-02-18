@@ -5,9 +5,9 @@
 package peli21;
 
 /**
- * Yksinkertainen enum siirtojen seurausten kuvailemiseen.
+ * Yksinkertainen enum ruudun suuntien tilojen kuvaamiseen.
  * 
  */
-public enum Effect {
-    SUCCESS, BONUS, DEATH;
+public enum Tila {
+    ON, BONUS, OFF;
 }
