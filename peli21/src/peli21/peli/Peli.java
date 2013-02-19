@@ -70,14 +70,15 @@ public class Peli implements ActionListener {
         this.paivitettava.paivitaKomponentit();
         this.paivitettava.paivita();
         this.jatkuu = true;
-        this.ajastin.start();
+        //this.ajastin.start();
     }
 
     private void lopetaPeli() {
         this.ajastin.stop();
         jatkuu = false;
         highscorelista.lisaa(pelaajanNimi, pisteet);
-        highscorelista.tulosta();
+        //highscorelista.tulosta();
+        System.out.print(highscorelista);
     }
 
     public Ruudukko getRuudukko() {
@@ -85,8 +86,8 @@ public class Peli implements ActionListener {
     }
 
     /**
-     * @return Palauttaa <code>true</code> sen jälkeen,      * kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen
-     * kerran.
+     * @return Palauttaa <code>true</code> sen jälkeen, kun peli on kerran aloitettu
+     * eli kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen kerran.
      */
     public boolean isAlkanut() {
         return this.alkanut;
@@ -120,6 +121,7 @@ public class Peli implements ActionListener {
      * @param suunta Suunta, johon pelaajaa liikutetaan.
      */
     public void liikutaPelaajaa(Suunta suunta) {
+        this.ajastin.start();
         if (!jatkuu) {
             return;
         }
@@ -140,11 +142,11 @@ public class Peli implements ActionListener {
                 bonuslaskuri = 50;
                 pisteet += 8;
                 
-                //Tämän lisäksi tapahtuvat "ON"-tilaa koskevat asiat:
+                //Tämän lisäksi tapahtuvat kaikki "ON"-tilaa koskevat asiat:
             case ON:
                 if (bonuslaskuri > 0) {
                     pisteet = pisteet + 2; //Jos bonus on päällä, tavalliset pisteet tulevat kaksinkertaisena.
-                    aika = oletusaika; //Jos bonus on päällä, niin ajan saa joka siirrosta täyteen.
+                    aika = oletusaika; //Jos bonus on päällä, niin ajan saa onnistuneesta siirrosta täyteen.
                 } else {
                     pisteet++;
                     if (aika+aika/2 > oletusaika) {
@@ -179,6 +181,10 @@ public class Peli implements ActionListener {
 
     public int getBonusLaskuri() {
         return this.bonuslaskuri;
+    }
+    
+    public Highscorelista getHighscore() {
+        return this.highscorelista;
     }
 
     @Override

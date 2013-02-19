@@ -99,6 +99,23 @@ public class Highscorelista {
             System.out.println(t);
         }
     }
+    
+    /**
+     * Palauttaa listan String-muodossa sisältäen rivinvaihdot.
+     */
+    @Override
+    public String toString() {
+        if (tuloslista.isEmpty()) {
+            return "It seems we've come up empty.\nNow's would be a lovely time to play, good sir";
+        }
+        String palautus = "";
+        int n = 1;
+        for (Tulos t : tuloslista) {
+            palautus += n + ": " + t + "\n";
+            n++;
+        }
+        return palautus;
+    }
 
     /**
      * Tyhjentää listan.

@@ -14,7 +14,8 @@ import javax.swing.WindowConstants;
 import peli21.peli.Peli;
 
 /**
- * Käyttöliittymäluokka, joka luo pelin pääikkunana käytettävän JFrame-olion, asettaa sille koon ja luo siihen piirrettävät komponentit.
+ * Käyttöliittymäluokka, joka luo pelin pääikkunana käytettävän JFrame-olion,
+ * asettaa sille koon ja luo siihen piirrettävät komponentit.
  */
 public class Kayttoliittyma implements Runnable {
 
@@ -24,9 +25,11 @@ public class Kayttoliittyma implements Runnable {
     private Piirtoalusta piirtoalusta;
 
     /**
-     * Konstruktorissa Kayttoliittyma saa pelinä käytettävän <code>Peli</code>-olion sekä tiedon yhden peliruudun sivun pituudesta.
+     * Konstruktorissa Kayttoliittyma saa pelinä käytettävän
+     * <code>Peli</code>-olion sekä tiedon yhden peliruudun sivun pituudesta.
+     *
      * @param peli
-     * @param sivunPituus 
+     * @param sivunPituus
      */
     public Kayttoliittyma(Peli peli, int sivunPituus) {
         this.peli = peli;
@@ -38,7 +41,8 @@ public class Kayttoliittyma implements Runnable {
     }
 
     /**
-     * Runnable-rajapinnan toteuttamiseen vaadittu metodi, jossa luodaan peli-ikkuna.
+     * Runnable-rajapinnan toteuttamiseen vaadittu metodi, jossa luodaan
+     * peli-ikkuna.
      */
     @Override
     public void run() {
@@ -66,13 +70,21 @@ public class Kayttoliittyma implements Runnable {
         //ja luodaan vielä hauska menubar kaupan päälle
         piirtoalusta = new Piirtoalusta(peli, sivunPituus);
         contentPane.add(piirtoalusta);
+
         frame.addKeyListener(new Nappaimistonkuuntelija(peli));
-        JMenuItem newAction = new JMenuItem("New game");
-        newAction.addActionListener(new UusiPeliKuuntelija(peli, this));
+
         JMenu gameMenu = new JMenu("Game");
-        gameMenu.add(newAction);
         JMenuBar menubar = new JMenuBar();
         menubar.add(gameMenu);
+
+        JMenuItem newAction = new JMenuItem("New game");
+        newAction.addActionListener(new UusiPeliKuuntelija(peli, this));
+        gameMenu.add(newAction);
+
+        JMenuItem highScoreAction = new JMenuItem("High score...");
+        highScoreAction.addActionListener(new HighScoreIkkuna(peli));
+        gameMenu.add(highScoreAction);
+
         frame.setJMenuBar(menubar);
     }
 }
