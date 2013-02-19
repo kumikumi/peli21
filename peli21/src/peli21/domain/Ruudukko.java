@@ -18,6 +18,7 @@ public class Ruudukko {
     private Pelihahmo pelaaja;
     private final int LEVEYS;
     private final int KORKEUS;
+    private int[] hilight;
 
     /**
      * Konstruktorissa ruudukolle annetaan parametreina
@@ -34,11 +35,16 @@ public class Ruudukko {
         taulukko = new Ruutu[leveys][korkeus];
         alustaRuudut();
         this.pelaaja = new Pelihahmo(leveys / 2, korkeus / 2);
-        for (int i = 0; i<25; i++) {
+        for (int i = 0; i < 25; i++) {
             arvoTila(Tila.OFF);
         }
         arvoTila(Tila.BONUS);
         arvoTila(Tila.BONUS);
+
+        hilight = new int[2];
+        hilight[0] = -1;
+        hilight[1] = -1;
+
     }
 
     private void alustaRuudut() {
@@ -84,7 +90,7 @@ public class Ruudukko {
         if (taulukko[x][y].getTila(suunta) == Tila.BONUS) {
             arvoTila(tila);
         } else {
-        taulukko[x][y].setSuunta(suunta, tila);
+            taulukko[x][y].setSuunta(suunta, tila);
         }
     }
 
@@ -122,16 +128,18 @@ public class Ruudukko {
         return KORKEUS;
     }
 
+    public int[] getHilight() {
+        return this.hilight;
+    }
+
     /**
      * Pelaajaa voi liikuttaa kerrallaan yhteen neljästä suunnasta. Ruudukko
      * saattaa muuttua tätä metodia kutsuttaessa.
      *
      * @param suunta Suunta, johon pelaajaa liikutetaan.
-     * @return Kohderuudun tila sille suunnalle, johon liikuttiin. Tila
-     * saadaan <code>Tila</code>-luokasta ja voi
-     * olla <code>Tila.ON</code>, <code>Tila.OFF</code>
-     * tai <code>Tila.BONUS</code>. Jos yritettiin liikkua ulos ruudukosta,
-     * palautetaan <code>Tila.OFF</code> ja pelaaja siirretään takaisin.
+     * @return Kohderuudun tila sille suunnalle, johon liikuttiin. Tila      * saadaan <code>Tila</code>-luokasta ja voi      * olla <code>Tila.ON</code>, <code>Tila.OFF</code>      * tai <code>Tila.BONUS</code>. Jos yritettiin liikkua ulos
+     * ruudukosta, palautetaan <code>Tila.OFF</code> ja pelaaja siirretään
+     * takaisin.
      *
      */
     public Tila liikutaPelaajaa(Suunta suunta) {
@@ -147,7 +155,13 @@ public class Ruudukko {
                 arvoTila(Tila.BONUS);
             }
             if (palautus == Tila.OFF) {
+                hilight = new int[2];
+                hilight[0] = pelaaja.getX();
+                hilight[1] = pelaaja.getY();
                 pelaaja.liikuta(suunta.vastakkainenSuunta());
+            } else {
+                hilight[0] = -1;
+                hilight[1] = -1;
             }
             return palautus;
         }

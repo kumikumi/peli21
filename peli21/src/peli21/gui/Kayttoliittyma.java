@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 import peli21.peli.Peli;
 
@@ -80,6 +81,8 @@ public class Kayttoliittyma implements Runnable {
         JMenuItem newAction = new JMenuItem("New game");
         newAction.addActionListener(new UusiPeliKuuntelija(peli, this));
         gameMenu.add(newAction);
+        
+        newAction.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, 0));
 
         JMenuItem highScoreAction = new JMenuItem("High score...");
         highScoreAction.addActionListener(new HighScoreIkkuna(peli));
