@@ -7,7 +7,7 @@ package peli21.gui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import peli21.Suunta;
-import peli21.domain.Pelihahmo;
+import peli21.domain.Koordinaatit;
 import peli21.peli.Peli;
 
 /**

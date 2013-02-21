@@ -109,5 +109,6 @@ public class HighscorelistaTest {
         h.lisaa("Juuso", 10);
         h.lisaa("Oskari", 5);
         assertEquals(5, h.getTuloslista().size());
+        h.tyhjenna();
     }
 }

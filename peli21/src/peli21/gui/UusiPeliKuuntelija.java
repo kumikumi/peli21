@@ -55,23 +55,38 @@ public class UusiPeliKuuntelija implements ActionListener {
         myPanel.add(nameField);
         myPanel.add(new JLabel("Time: "));
         myPanel.add(timeField);
-        
+
 
 
         int result = JOptionPane.showConfirmDialog(null, myPanel, "New Game", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
+                if (nameField.getText().contains(":")) {
+                    JOptionPane.showMessageDialog(frame, "Illegal character: :");
+                    return;
+                }
                 String name;
                 if (nameField.getText().isEmpty()) {
                     name = "Anonymous";
                 } else {
                     name = nameField.getText();
                 }
-                
+
                 if (Integer.parseInt(timeField.getText()) <= 0) {
-                        JOptionPane.showMessageDialog(frame, "How about no");
-                        return;
+                    JOptionPane.showMessageDialog(frame, "How about no");
+                    return;
                 }
+                
+                if (Integer.parseInt(xField.getText()) < 10) {
+                      JOptionPane.showMessageDialog(frame, "Width must be at least 10");
+                      return;
+                }
+                
+                if (Integer.parseInt(yField.getText()) < 5) {
+                      JOptionPane.showMessageDialog(frame, "Height must be at least 5");
+                      return;
+                }
+
                 
                 // Tehdään uusi peli
                 peli.uusiPeli(name, Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()), Integer.parseInt(timeField.getText()));

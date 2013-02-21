@@ -11,10 +11,11 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import peli21.Suunta;
-import peli21.domain.Pelihahmo;
+import peli21.domain.Koordinaatit;
 import peli21.domain.Ruudukko;
 import peli21.domain.Ruutu;
 import peli21.peli.Peli;
@@ -29,13 +30,16 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private int sivunPituus;
     private Ruudukko peliruudukko;
     private Ruutu[][] taulukko;
-    private Pelihahmo pelihahmo;
+    private Koordinaatit pelihahmo;
+    private Koordinaatit hilight;
     private Font font;
     private Map<Suunta, Image> kuvat;
     private Map<Suunta, Image> bonuskuvat;
     private Image splashKuva;
     private Image tausta;
     private int maksimiaika;
+    private String endGameTaunt;
+    private String timeUpTaunt;
 
     public Piirtoalusta(Peli peli, int palanSivunPituus) {
         this.peli = peli;
@@ -73,6 +77,9 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         piirraRuudukko(g);
         piirraPelihahmo(g);
         piirraHud(g);
+        if (!peli.jatkuu()) {
+            piirraTeksti(g);
+        }
     }
 
     private void piirraRuudukko(Graphics g) {
@@ -84,8 +91,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
 
         for (int x = 0; x < peliruudukko.getLEVEYS(); x++) {
             for (int y = 0; y < peliruudukko.getKORKEUS(); y++) {
-                int[] kuumaRuutu = peliruudukko.getHilight();
-                if (x == kuumaRuutu[0] && y == kuumaRuutu[1]) {
+                if (x == hilight.getX() && y == hilight.getY()) {
                     g.setColor(new Color(0xF06C00));
                 } else if (peli.getBonusLaskuri() > 0) {
                     g.setColor(new Color(0x050050));
@@ -130,10 +136,71 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         }
 
 
-        if (!peli.jatkuu()) {
-            g.setColor(new Color(0xC70000));
-            g.setFont(new Font("Sans", Font.PLAIN, 60));
-            g.drawString("GAME OVER", peliruudukko.getLEVEYS() * sivunPituus / 2 - 150, peliruudukko.getKORKEUS() * sivunPituus / 2);
+    }
+
+    private void piirraTeksti(Graphics g) {
+        g.setColor(new Color((float) 0.9, (float) 0.9, (float) 0.9, (float) 0.7));
+        g.fillRect(0, 0, peliruudukko.getLEVEYS() * sivunPituus, peliruudukko.getKORKEUS() * sivunPituus);
+        g.setColor(new Color(0xC70000));
+        g.setFont(new Font("Sans", Font.PLAIN, 60));
+        int pituus = (int) g.getFontMetrics().getStringBounds("GAME OVER", g).getWidth();
+        g.drawString("GAME OVER", peliruudukko.getLEVEYS() / 2 - pituus / 2 + peliruudukko.getLEVEYS() * sivunPituus / 2, peliruudukko.getKORKEUS() * sivunPituus / 2);
+        g.setFont(new Font("Serif", Font.ITALIC, 34));
+        String lause;
+        if (peli.getPisteet() > 5 && peli.pelaajaSaiEnnatyksen()) { //jos pelaaja sai ennätyksen joka ei ole säälittävän pieni
+            lause = "Congratulations! New highscore: " + peli.getPisteet();
+        } else if (peli.getAika() == 0) {
+            lause = this.timeUpTaunt;
+        } else {
+            lause = this.endGameTaunt;
+        }
+        pituus = (int) g.getFontMetrics().getStringBounds(lause, g).getWidth();
+        g.drawString(lause, peliruudukko.getLEVEYS() / 2 - pituus / 2 + peliruudukko.getLEVEYS() * sivunPituus / 2, peliruudukko.getKORKEUS() * sivunPituus / 2 + 40);
+    }
+
+    private String arvoEndGameLause() {
+        Random arpoja = new Random();
+        switch (arpoja.nextInt(12)) {
+            case 0:
+                return "You need to be more careful";
+            case 1:
+                return "Watch where you're going!";
+            case 2:
+                return "There are easier games out there...";
+            case 3:
+                return "Perhaps you should just give up";
+            case 4:
+                return "What did you expect to happen?";
+            case 5:
+                return "Watch your step!";
+            case 6:
+                return "Oh dear! You've made a terrible mistake";
+            case 7:
+                return "Feeling tired?";
+            case 8:
+                return "Watch the arrows before you move";
+            case 9:
+                return "If there's no arrow, don't go that way!";
+            case 10:
+                return "Nice try, except it failed";
+            case 11:
+                return "I'd consider some of the easier games...";
+            default:
+                throw new IllegalStateException("Arpoja antoi väärän luvun");
+        }
+    }
+
+    private String arvoTimeUpLause() {
+        Random arpoja = new Random();
+        switch (arpoja.nextInt(3)) {
+            case 0:
+                return "No need to rush, but your time is up";
+            case 1:
+                return "Did you fall asleep? Time's up.";
+            case 2:
+                return "Now why would you let the time run out?";
+            default:
+                throw new IllegalStateException("Arpoja antoi väärän luvun");
         }
     }
 
@@ -146,6 +213,9 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         this.taulukko = peliruudukko.getTaulukko();
         this.pelihahmo = peliruudukko.getPelaaja();
         this.maksimiaika = peli.getOletusAika();
+        this.hilight = peliruudukko.getHilight();
+        this.endGameTaunt = arvoEndGameLause();
+        this.timeUpTaunt = arvoTimeUpLause();
     }
 
     @Override

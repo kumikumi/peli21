@@ -9,7 +9,7 @@ import peli21.Suunta;
 /**
  * Yksinkertainen olio, jolla on kaksi koordinaattia <code>x</code> ja <code>y</code>.
  */
-public class Pelihahmo {
+public class Koordinaatit {
 
     private int x;
     private int y;
@@ -19,14 +19,14 @@ public class Pelihahmo {
  * @param x x-koordinaatti luontihetkellä.
  * @param y y-koordinaatti luontihetkellä.
  */
-    public Pelihahmo(int x, int y) {
+    public Koordinaatit(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
     /**
-     * Muuttaa pelihahmon koordinaatteja parametrina annettuun suuntaan liikkumista vastaavalla tavalla.
-     * @param suunta Suunta, johon pelihahmoa liikutetaan. Suunta saadaan <code>Suunta-luokasta</code> ja voi olla <code>Suunta.YLOS</code>, <code>Suunta.ALAS</code>, <code>Suunta.VASEN</code> tai <code>Suunta.OIKEA</code>.
+     * Muuttaa koordinaatteja parametrina annettuun suuntaan liikkumista vastaavalla tavalla.
+     * @param suunta Suunta, johon liikutaan. Suunta saadaan <code>Suunta-luokasta</code> ja voi olla <code>Suunta.YLOS</code>, <code>Suunta.ALAS</code>, <code>Suunta.VASEN</code> tai <code>Suunta.OIKEA</code>.
      */
     public void liikuta(Suunta suunta) {
         switch (suunta) {
@@ -61,11 +61,11 @@ public class Pelihahmo {
         return this.y;
     }
     /**
-     * @return Palauttaa tiedon olion paikasta muodossa "Pelihahmo paikassa (<code>x</code, <code>y</code>)".
+     * @return Palauttaa tiedon paikasta muodossa "Koordinaatit paikassa (<code>x</code, <code>y</code>)".
      */
     
     @Override
     public String toString() {
-        return "Pelihahmo paikassa (" + this.x + "," + this.y + ")";
+        return "Koordinaatit paikassa (" + this.x + "," + this.y + ")";
     }
 }

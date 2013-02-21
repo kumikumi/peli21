@@ -15,10 +15,11 @@ import peli21.Suunta;
 public class Ruudukko {
 
     private Ruutu[][] taulukko;
-    private Pelihahmo pelaaja;
+    private Koordinaatit pelaaja;
+    private Koordinaatit hilight;
     private final int LEVEYS;
     private final int KORKEUS;
-    private int[] hilight;
+    //private int[] hilight;
 
     /**
      * Konstruktorissa ruudukolle annetaan parametreina
@@ -34,16 +35,15 @@ public class Ruudukko {
         this.KORKEUS = korkeus;
         taulukko = new Ruutu[leveys][korkeus];
         alustaRuudut();
-        this.pelaaja = new Pelihahmo(leveys / 2, korkeus / 2);
+        this.pelaaja = new Koordinaatit(leveys / 2, korkeus / 2);
         for (int i = 0; i < 25; i++) {
             arvoTila(Tila.OFF);
         }
         arvoTila(Tila.BONUS);
         arvoTila(Tila.BONUS);
 
-        hilight = new int[2];
-        hilight[0] = -1;
-        hilight[1] = -1;
+
+        hilight = new Koordinaatit(-1, -1);
 
     }
 
@@ -57,6 +57,8 @@ public class Ruudukko {
     }
 
     private void arvoTila(Tila tila) {
+        //Arpoo parametrina annetun tilan johonkin ruudukon nuolen paikalle
+        //Poikkeuksena se, että ei koskaan bonuksen paikalle
         Random arpoja = new Random();
 
         //int y = arpoja.nextInt(this.KORKEUS);
@@ -109,7 +111,7 @@ public class Ruudukko {
         return taulukko;
     }
 
-    public Pelihahmo getPelaaja() {
+    public Koordinaatit getPelaaja() {
         return this.pelaaja;
     }
 
@@ -128,7 +130,7 @@ public class Ruudukko {
         return KORKEUS;
     }
 
-    public int[] getHilight() {
+    public Koordinaatit getHilight() {
         return this.hilight;
     }
 
@@ -150,18 +152,18 @@ public class Ruudukko {
             taulukko[pelaaja.getX()][pelaaja.getY()].setSuunta(suunta, Tila.OFF);
             if (palautus == Tila.ON) {
                 arvoTila(Tila.ON);
+                arvoTila(Tila.ON);
             }
             if (palautus == Tila.BONUS) {
                 arvoTila(Tila.BONUS);
             }
             if (palautus == Tila.OFF) {
-                hilight = new int[2];
-                hilight[0] = pelaaja.getX();
-                hilight[1] = pelaaja.getY();
+                hilight.setX(pelaaja.getX());
+                hilight.setY(pelaaja.getY());
                 pelaaja.liikuta(suunta.vastakkainenSuunta());
             } else {
-                hilight[0] = -1;
-                hilight[1] = -1;
+                hilight.setX(-1);
+                hilight.setY(-1);
             }
             return palautus;
         }

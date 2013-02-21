@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class PelihahmoTest {
     
-    private Pelihahmo batman;
+    private Koordinaatit batman;
 
     
     public PelihahmoTest() {
@@ -29,7 +29,7 @@ public class PelihahmoTest {
     
     @Before
     public void setUp() {
-        batman = new Pelihahmo(3, 2);
+        batman = new Koordinaatit(3, 2);
     }
     
     @After

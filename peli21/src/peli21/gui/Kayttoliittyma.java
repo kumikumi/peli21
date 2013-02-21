@@ -53,6 +53,7 @@ public class Kayttoliittyma implements Runnable {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         luoKomponentit(frame.getContentPane());
         frame.setVisible(true);
+        frame.setResizable(false);
     }
 
     /**

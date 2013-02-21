@@ -33,6 +33,7 @@ public class Highscorelista {
         try {
             lataaLista(tiedosto);
         } catch (FileNotFoundException ex) {
+            System.out.println("file not found");
         }
     }
 
@@ -59,6 +60,7 @@ public class Highscorelista {
         try {
             FileWriter kirjoittaja = new FileWriter(tiedosto);
 
+            kirjoittaja.write("# Thou shall be heavily punished for illegally editing this file\n");
             for (Tulos t : tuloslista) {
                 kirjoittaja.write(t.toString() + "\n");
             }
@@ -74,13 +76,19 @@ public class Highscorelista {
      * @param nimi Pelaajan nimi.
      * @param pisteet Pelaajan pelissä saama pistemäärä.
      */
-    public void lisaa(String nimi, int pisteet) {
-        this.tuloslista.add(new Tulos(nimi, pisteet));
+    public boolean lisaa(String nimi, int pisteet) {
+        boolean ennatys = false;
+        Tulos lisattava = new Tulos(nimi, pisteet);
+        this.tuloslista.add(lisattava);
         Collections.sort(tuloslista);
+        if (tuloslista.get(0) == lisattava) {
+            ennatys = true;
+        }
         if (tuloslista.size() > this.listanKoko) {
             tuloslista.remove(tuloslista.size() - 1);
         }
         tallennaLista(this.tiedosto);
+        return ennatys;
     }
     
     /**
@@ -118,10 +126,10 @@ public class Highscorelista {
     }
 
     /**
-     * Tyhjentää listan.
+     * Tyhjentää listan ja poistaa tallennetun listan.
      */
     public void tyhjenna() {
         this.tuloslista = new ArrayList<Tulos>();
-        tallennaLista(this.tiedosto);
+        this.tiedosto.delete();
     }
 }

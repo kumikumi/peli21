@@ -35,6 +35,7 @@ public class Peli implements ActionListener {
     private int pisteet;
     private Ruudukko ruudukko;
     private Paivitettava paivitettava;
+    private boolean pelaajaSaiEnnatyksen;
     //private Pelihahmo pelaaja;
 
     /**
@@ -60,6 +61,7 @@ public class Peli implements ActionListener {
      * @param korkeus Luotavan ruudukon korkeus (ruutuina).
      */
     public void uusiPeli(String pelaajanNimi, int leveys, int korkeus, int aika) {
+        lopetaPeli();
         this.alkanut = true;
         this.pelaajanNimi = pelaajanNimi;
         this.pisteet = 0;
@@ -71,12 +73,13 @@ public class Peli implements ActionListener {
         this.paivitettava.paivita();
         this.jatkuu = true;
         //this.ajastin.start();
+        this.pelaajaSaiEnnatyksen = false;
     }
 
     private void lopetaPeli() {
         this.ajastin.stop();
         jatkuu = false;
-        highscorelista.lisaa(pelaajanNimi, pisteet);
+        pelaajaSaiEnnatyksen = highscorelista.lisaa(pelaajanNimi, pisteet);
         //highscorelista.tulosta();
         System.out.print(highscorelista);
     }
@@ -149,12 +152,20 @@ public class Peli implements ActionListener {
                     aika = oletusaika; //Jos bonus on päällä, niin ajan saa onnistuneesta siirrosta täyteen.
                 } else {
                     pisteet++;
-                    if (aika+aika/2 > oletusaika) {
+                    if (aika + 3 > oletusaika) {
                         aika = oletusaika;
                     } else {
-                        aika+=aika/2; //Jos ollaan normaalitilassa, aika 1.5-kertaistuu joka onnistuneesta siirrosta.
-                        //aika += (oletusaika - aika) / 2; //Toinen vaihtoehto olis että aika täytetään puoliksi.
+                        aika = aika +3;
                     }
+                    
+                    
+                    
+//                    if (aika+aika/2 > oletusaika) {
+//                        aika = oletusaika;
+//                    } else {
+//                        aika+=aika/2; //Jos ollaan normaalitilassa, aika 1.5-kertaistuu joka onnistuneesta siirrosta.
+                        //aika += (oletusaika - aika) / 2; //Toinen vaihtoehto olis että aika täytetään puoliksi.
+//                    }
                 }
                 break;
             case OFF: //Ahaa! Pelaaja on töpeksinyt
@@ -186,6 +197,10 @@ public class Peli implements ActionListener {
     public Highscorelista getHighscore() {
         return this.highscorelista;
     }
+    
+    public boolean pelaajaSaiEnnatyksen() {
+        return this.pelaajaSaiEnnatyksen;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -197,14 +212,14 @@ public class Peli implements ActionListener {
         }
         // @TODO: Timer logic here
         aika--;
-        this.paivitettava.paivita();
         if (aika == 0) {
             if (bonuslaskuri > 0) {
-                aika = oletusaika*3/4;
+                aika = Math.max(aika, oletusaika*3/4);
                 bonuslaskuri = 0;
             } else {
             this.lopetaPeli();
             }
         }
+        this.paivitettava.paivita();
     }
 }

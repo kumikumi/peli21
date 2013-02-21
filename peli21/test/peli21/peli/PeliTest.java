@@ -8,7 +8,7 @@ import javax.swing.SwingUtilities;
 import org.junit.*;
 import static org.junit.Assert.*;
 import peli21.Suunta;
-import peli21.domain.Pelihahmo;
+import peli21.domain.Koordinaatit;
 import peli21.gui.Kayttoliittyma;
 
 /**
@@ -88,7 +88,7 @@ public class PeliTest {
         ruudukkopeli.liikutaPelaajaa(Suunta.VASEN);
         ruudukkopeli.liikutaPelaajaa(Suunta.ALAS);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
-        Pelihahmo p = ruudukkopeli.getRuudukko().getPelaaja();
+        Koordinaatit p = ruudukkopeli.getRuudukko().getPelaaja();
         assertEquals(4, p.getX());
         assertEquals(4, p.getY());
     }
