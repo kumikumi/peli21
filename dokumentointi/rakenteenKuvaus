@@ -1,0 +1,7 @@
+Ohjelmassa on selkeästi rajatut vastuut: 
+- Peli huolehtii pisteidenlaskusta ja muista peliin liittyvistä tiedoista
+- Ruudukko huolehtii varsinaisesta pelilautana käytettävästä ruudukosta. Tuntee siis taulukollisen ruutuja ja pelaajan paikan, ja toteuttaa siirrot
+- Piirtoalusta käy jokaisella piirtokerralla läpi ja piirtää tämän Ruudukko-oliolta saadun ruudukon ja pelihahmon, ja toisaalta myös Peliltä saadun tiedon pistemäärästä ja pelaajan nimestä
+
+
+Kun halutaan tehdä siirto, näppäimistönkuuntelija kutsuu Pelin tästä asiasta vastaavaa metodia ja ilmoittaa tälle, että halutaan liikkua tiettyyn suuntaan. Peli puolestaan (tietämättä mitään ruudukon tai pelihahmon tilasta) ilmoittaa edelleen Ruudukolle, että halutaan liikkua tähän suuntaan, ja valmistautuu ottamaan vastaan palautteen ruudun tilasta. Jos peli sai vastauksena OFF, tämä tarkoittaa että pelaaja liikkui ruutuun kohdasta, jossa ei ollut nuolta (tai pelaaja liikkui ruudukon ulkopuolelle), eli siirto oli laiton. Jos vastauksena oli bonus, bonustila aktivoidaan. Jos vastauksena oli tavallinen nuoli (ON), lisätään piste laskuriin ja lisätään aikaa mittariin. 

@@ -48,6 +48,7 @@ public class Highscorelista {
             try {
             String[] osat = rivi.split(":");
             this.lisaa(osat[0], Integer.parseInt(osat[1]));
+            //this.tuloslista.add(new Tulos(osat[0], Integer.parseInt(osat[1])));
             } catch (Exception e) {
                 System.out.println("Jotain meni pieleen highscorelistaa ladattaessa.");
             }
@@ -87,6 +88,7 @@ public class Highscorelista {
         if (tuloslista.size() > this.listanKoko) {
             tuloslista.remove(tuloslista.size() - 1);
         }
+        Collections.sort(tuloslista);
         tallennaLista(this.tiedosto);
         return ennatys;
     }
@@ -114,7 +116,7 @@ public class Highscorelista {
     @Override
     public String toString() {
         if (tuloslista.isEmpty()) {
-            return "It seems we've come up empty.\nNow's would be a lovely time to play, good sir";
+            return "It seems we've come up empty.\nNow would be a lovely time to play, good sir";
         }
         String palautus = "";
         int n = 1;

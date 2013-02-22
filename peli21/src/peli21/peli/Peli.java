@@ -61,18 +61,18 @@ public class Peli implements ActionListener {
      * @param korkeus Luotavan ruudukon korkeus (ruutuina).
      */
     public void uusiPeli(String pelaajanNimi, int leveys, int korkeus, int aika) {
-        lopetaPeli();
+        this.ajastin.stop();
         this.alkanut = true;
         this.pelaajanNimi = pelaajanNimi;
         this.pisteet = 0;
         this.bonuslaskuri = 0;
         this.ruudukko = new Ruudukko(leveys, korkeus);
+        this.ruudukko.alustaRuudut();
         this.oletusaika = aika;
         this.aika = aika;
         this.paivitettava.paivitaKomponentit();
         this.paivitettava.paivita();
         this.jatkuu = true;
-        //this.ajastin.start();
         this.pelaajaSaiEnnatyksen = false;
     }
 
@@ -82,6 +82,14 @@ public class Peli implements ActionListener {
         pelaajaSaiEnnatyksen = highscorelista.lisaa(pelaajanNimi, pisteet);
         //highscorelista.tulosta();
         System.out.print(highscorelista);
+    }
+    
+    /**
+     * Asettaa ruudukon. Voidaan käyttää testaamiseen.
+     * @param ruudukko 
+     */
+    public void setRuudukko(Ruudukko ruudukko) {
+        this.ruudukko = ruudukko;
     }
 
     public Ruudukko getRuudukko() {
@@ -133,12 +141,10 @@ public class Peli implements ActionListener {
         if (!jatkuu) {
             return;
         }
-        System.out.println(ruudukko.getPelaaja());
-        System.out.println("Pisteet: " + pisteet);
     }
 
-    private void reagoiPalautukseen(Tila e) {
-        switch (e) {
+    private void reagoiPalautukseen(Tila tila) {
+        switch (tila) {
             case BONUS:
                 //Jos pelaaja sai bonuksen, alaspäin laskeva bonuslaskuri laitetaan täyteen (50).
                 //Bonuksesta saa lisäksi 8+2 pistettä.
@@ -172,7 +178,7 @@ public class Peli implements ActionListener {
                 if (bonuslaskuri > 0) { //Jos bonusta oli, otetaan se pois
                     bonuslaskuri = 0;
                 } else { // Muussa tapauksessa kaveri potkaisee tyhjää
-                    System.out.println("DEATH");
+                    System.out.println("Peli päättyi.");
                     lopetaPeli();
                 }
         }
@@ -214,7 +220,7 @@ public class Peli implements ActionListener {
         aika--;
         if (aika == 0) {
             if (bonuslaskuri > 0) {
-                aika = Math.max(aika, oletusaika*3/4);
+                aika = Math.min(oletusaika, bonuslaskuri);
                 bonuslaskuri = 0;
             } else {
             this.lopetaPeli();

@@ -11,3 +11,7 @@
 09.02.13 | 3 | Sisällytettiin kuvat jar-tiedostoon ja muokattiin kuvanlatauskoodia. Lisättiin New Game-nappi yläpalkkiin.
 11.02.13 | 2 | Lisättiin splash-screen ja refaktoroitiin hieman koodia. Peli ei nyt ala automaattisesti vaan se pitää käynnistää yläpalkista.
 12.02.13 | 3 | Tehtiin parempia testejä ja piirreltiin sekvenssikaavioita.
+18.02.13 | 5 | Lisäiltiin hurjasti pelilogiikkaa ja refaktoroitiin koodia.
+19.02.13 | 2 | Lisättiin highscore-ikkuna ja hilight joka näyttää laittoman siirron
+21.02.13 | 2 | Lisättiin käyttäjää kannustavia lauseita pelin loppuun
+22.02.13 | 3 | Päivitettiin testejä ja vaikka mitä

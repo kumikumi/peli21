@@ -24,6 +24,8 @@ public class Kayttoliittyma implements Runnable {
     private Peli peli;
     private int sivunPituus;
     private Piirtoalusta piirtoalusta;
+    private JMenuBar menubar;
+    private int sivuPalkinLeveys;
 
     /**
      * Konstruktorissa Kayttoliittyma saa pelinä käytettävän
@@ -32,9 +34,10 @@ public class Kayttoliittyma implements Runnable {
      * @param peli
      * @param sivunPituus
      */
-    public Kayttoliittyma(Peli peli, int sivunPituus) {
+    public Kayttoliittyma(Peli peli, int sivunPituus, int sivuPalkinLeveys) {
         this.peli = peli;
         this.sivunPituus = sivunPituus;
+        this.sivuPalkinLeveys = sivuPalkinLeveys;
     }
 
     public Piirtoalusta getPiirtoalusta() {
@@ -48,10 +51,10 @@ public class Kayttoliittyma implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("Peli 21");
-        frame.setPreferredSize(new Dimension(640, 520));
+        luoKomponentit(frame.getContentPane());
+        piirtoalusta.setPreferredSize(new Dimension(640, 480));
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        luoKomponentit(frame.getContentPane());
         frame.setVisible(true);
         frame.setResizable(false);
     }
@@ -60,10 +63,18 @@ public class Kayttoliittyma implements Runnable {
      * Päivittää ikkunan koon vastaamaan pelin ruudukon mittoja.
      */
     public void paivitaKoko() {
-        int leveys = (peli.getRuudukko().getLEVEYS()) * sivunPituus + 120;
-        int korkeus = (peli.getRuudukko().getKORKEUS() + 1) * sivunPituus + 10;
-        frame.setPreferredSize(new Dimension(leveys, korkeus));
+        // frame.pack lakkaa näköjään toimimasta kokonaan, jos sitä käytetään kun koko ei ole muuttunut.
+        // siispä tehtiin purukumisysteemi jolla tarkistetaan, tarvitseeko ruudukon kokoa muuttaa.
+        boolean korkeusMuuttui = peli.getRuudukko().getKORKEUS()*sivunPituus != piirtoalusta.getHeight();
+        boolean leveysMuuttui = peli.getRuudukko().getLEVEYS()*sivunPituus+sivuPalkinLeveys != piirtoalusta.getWidth();
+        if (korkeusMuuttui || leveysMuuttui) {
+        frame.setResizable(true);
+        int leveys = (peli.getRuudukko().getLEVEYS()) * sivunPituus + sivuPalkinLeveys;
+        int korkeus = (peli.getRuudukko().getKORKEUS()) * sivunPituus;
+        piirtoalusta.setPreferredSize(new Dimension(leveys, korkeus));
         frame.pack();
+        frame.setResizable(false);
+        }
     }
 
     private void luoKomponentit(Container contentPane) {
@@ -76,7 +87,7 @@ public class Kayttoliittyma implements Runnable {
         frame.addKeyListener(new Nappaimistonkuuntelija(peli));
 
         JMenu gameMenu = new JMenu("Game");
-        JMenuBar menubar = new JMenuBar();
+        menubar = new JMenuBar();
         menubar.add(gameMenu);
 
         JMenuItem newAction = new JMenuItem("New game");

@@ -25,7 +25,7 @@ public class UusiPeliKuuntelija implements ActionListener {
     private String nameText;
     private String widthText;
     private String heightText;
-    private String timeText;
+//    private String timeText;
 
     public UusiPeliKuuntelija(Peli peli, Kayttoliittyma kali) {
         this.peli = peli;
@@ -33,7 +33,7 @@ public class UusiPeliKuuntelija implements ActionListener {
         this.nameText = "";
         this.widthText = "10";
         this.heightText = "6";
-        this.timeText = "20";
+//        this.timeText = "20";
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UusiPeliKuuntelija implements ActionListener {
         JTextField nameField = new JTextField(10);
         nameField.setText(nameText);
         JTextField timeField = new JTextField(5);
-        timeField.setText(timeText);
+//        timeField.setText(timeText);
         JPanel myPanel = new JPanel();
         myPanel.add(new JLabel("Width:"));
         myPanel.add(xField);
@@ -53,8 +53,8 @@ public class UusiPeliKuuntelija implements ActionListener {
         myPanel.add(yField);
         myPanel.add(new JLabel("Player name:"));
         myPanel.add(nameField);
-        myPanel.add(new JLabel("Time: "));
-        myPanel.add(timeField);
+//        myPanel.add(new JLabel("Time: "));
+//        myPanel.add(timeField);
 
 
 
@@ -72,30 +72,40 @@ public class UusiPeliKuuntelija implements ActionListener {
                     name = nameField.getText();
                 }
 
-                if (Integer.parseInt(timeField.getText()) <= 0) {
-                    JOptionPane.showMessageDialog(frame, "How about no");
+//                if (Integer.parseInt(timeField.getText()) <= 0) {
+//                    JOptionPane.showMessageDialog(frame, "How about no");
+//                    return;
+//                }
+
+                if (Integer.parseInt(xField.getText()) < 10) {
+                    JOptionPane.showMessageDialog(frame, "Width must be at least 10");
                     return;
                 }
-                
-                if (Integer.parseInt(xField.getText()) < 10) {
-                      JOptionPane.showMessageDialog(frame, "Width must be at least 10");
-                      return;
-                }
-                
-                if (Integer.parseInt(yField.getText()) < 5) {
-                      JOptionPane.showMessageDialog(frame, "Height must be at least 5");
-                      return;
+
+                if (Integer.parseInt(xField.getText()) > 20) {
+                    JOptionPane.showMessageDialog(frame, "Width must be at most 20");
+                    return;
                 }
 
-                
+                if (Integer.parseInt(yField.getText()) < 5) {
+                    JOptionPane.showMessageDialog(frame, "Height must be at least 5");
+                    return;
+                }
+
+                if (Integer.parseInt(yField.getText()) > 20) {
+                    JOptionPane.showMessageDialog(frame, "Height must be at most 20");
+                    return;
+                }
+
+
                 // Tehdään uusi peli
-                peli.uusiPeli(name, Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()), Integer.parseInt(timeField.getText()));
+                peli.uusiPeli(name, Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()), 20);
                 kali.paivitaKoko();
                 // Muistetaan kenttien sisällöt
                 nameText = nameField.getText();
                 widthText = xField.getText();
                 heightText = yField.getText();
-                timeText = timeField.getText();
+                //timeText = timeField.getText();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(frame, "Wtf?");
             }

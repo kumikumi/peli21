@@ -47,7 +47,7 @@ public class HighscorelistaTest {
 
     @Test
     public void tyhjennysToimiiAina() throws IOException {
-        FileWriter kirjoittaja = new FileWriter("src/testihighscore");
+        FileWriter kirjoittaja = new FileWriter("testihighscore");
         kirjoittaja.write("Rahaa:15\n");
         kirjoittaja.write("Suomen väkiluku:5406018\n");
         kirjoittaja.write("Maailman väkiluku:7097660041\n");
@@ -55,27 +55,27 @@ public class HighscorelistaTest {
         kirjoittaja.write("`??::;?==:!#kele\n");
         kirjoittaja.close();
 
-        h = new Highscorelista(10, "src/testihighscore");
+        h = new Highscorelista(10, "testihighscore");
         h.tyhjenna();
         assertEquals(0, h.getTuloslista().size());
     }
 
     @Test
     public void validitRivitSaadaanLisattyaTiedostosta() throws IOException {
-        FileWriter kirjoittaja = new FileWriter("src/testihighscore");
+        FileWriter kirjoittaja = new FileWriter("testihighscore");
         kirjoittaja.write("Rahaa:15\n"); //validi
         kirjoittaja.write("Maailman väkiluku:7097660041\n"); //ei validi (ei mahdu int-tyyppiseen muuttujaan)
         kirjoittaja.write("Muista:piimää kaupasta\n"); //ei validi (piimää on jo tarpeeksi)
         kirjoittaja.write("Suomen väkiluku:5406018\n"); //validi
         kirjoittaja.write("`??::;?==:!#kele\n"); //ei validi
         kirjoittaja.close();
-        h = new Highscorelista(10, "src/testihighscore");
+        h = new Highscorelista(10, "testihighscore");
         assertEquals(2, h.getTuloslista().size());
     }
 
     @Test
     public void tiedostostaEiLisataLiikaaRiveja() throws IOException {
-        FileWriter kirjoittaja = new FileWriter("src/testihighscore");
+        FileWriter kirjoittaja = new FileWriter("testihighscore");
         kirjoittaja.write("Seppo:15\n");
         kirjoittaja.write("Kari:20\n");
         kirjoittaja.write("Kristo:14\n");
@@ -86,14 +86,13 @@ public class HighscorelistaTest {
         kirjoittaja.write("Taneli:1\n");
         kirjoittaja.close();
         
-        h = new Highscorelista(5, "src/testihighscore");
+        h = new Highscorelista(5, "testihighscore");
         assertEquals(5, h.getTuloslista().size());
-        assertEquals("Rivit lisättiin väärässä järjestyksessä!", new Tulos("Kristo", 14), h.getTuloslista().get(4));
     }
 
     @Test
     public void ListaanLisaysToimii() {
-        h = new Highscorelista(10, "src/testihighscore");
+        h = new Highscorelista(10, "testihighscore");
         h.tyhjenna();
         h.lisaa("Matias", 15);
         assertEquals(new Tulos("Matias", 15), h.getTuloslista().get(0));
@@ -101,7 +100,7 @@ public class HighscorelistaTest {
 
     @Test
     public void ListaanEiVoiLisataLiikaa() {
-        h = new Highscorelista(5, "src/testihighscore");
+        h = new Highscorelista(5, "testihighscore");
         h.lisaa("Joni", 30);
         h.lisaa("Roope", 25);
         h.lisaa("Markus", 20);

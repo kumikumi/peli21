@@ -1,0 +1,12 @@
+Koodinimi: Peli21
+Genre: Puzzle
+Aihe: Eeppinen seikkailu ruudukossa
+Kehittäjä: Mikko A. Kumara (kumikumi), Helsingin yliopisto
+Julkaisuvuosi: 2013
+Kuvaus: Yksinkertainen mutta koukuttava yhden pelaajan nopeatempoinen ajantappopeli, jossa pelaajan tehtävänä on liikkua mahdollisimman nopeasti ruudukon solujen välillä. Liikkuessaan pelaaja manipuloi ympäristöä ja vaikuttaa siihen, mihin soluihin hänen on mahdollista seuraavaksi edetä. Peli päättyy, kun pelaaja tekee laittoman siirron.
+
+Ruudukossa on kahdenlaisia nuolia: keltaisia ja sinisiä. Keltaiset ovat tavallisia ja siniset ns. "bonusnuolia", joita keräämällä pelaaja saa kaksinkertaiset pisteet tietyn aikaa. 
+
+Bonusnuolen keräämällä tausta muuttuu siniseksi ja näytölle ilmestyy bonuslaskuri, joka kuvaa bonusajan määrää. Bonuksen ollessa aktiivisena pelaajan tekemistä siirroista saadaan kaksinkertaiset pisteet ja pelaaja on tilapäisesti immuuni laittomille siirroille. Laittoman siirron tehtyään pelaaja tosin menettää bonuksen.
+
+Pelissä on myös aika, jonka loputtua peli päättyy. Aikaa saa lisää tekemällä laillisia siirtoja. Mikäli pelaajalla on bonusta jäljellä pelin päättyessä, jäljellä oleva bonusaika konvertoidaan tavalliseksi ajaksi (siltä osin kun se ei ylitä ajan maksimiarvoa) ja pelaaja menettää bonuksen.

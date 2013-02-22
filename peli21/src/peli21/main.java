@@ -22,11 +22,11 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here     
-        System.out.println("Seisotte nyt paikalla, johon on hyvää vauhtia valmistumassa eeppinen ruudukkopeli.");
+        // TODO code application logic here  
+        System.out.println("Eeppinen ruudukkopeli on täällä!");
 
         Peli ruudukkopeli = new Peli("peli21_highscore.omgwtfbbq");
-        Kayttoliittyma gui = new Kayttoliittyma(ruudukkopeli, 60);
+        Kayttoliittyma gui = new Kayttoliittyma(ruudukkopeli, 60, 120);
         SwingUtilities.invokeLater(gui);
         while (gui.getPiirtoalusta() == null) {
             try {

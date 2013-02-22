@@ -1,0 +1,35 @@
+SISÄLLYSLUETTELO
+1. Alkusanat
+2. Pelin järjestelmävaatimukset
+3. Käynnistäminen
+4. Valikko
+4.1 New Game
+4.2 High Score
+5. Pelaaminen
+5.1 Bonus
+6. Tiedossa olevat ongelmat
+6.1 Tekstin reunanpehmennys puuttuu
+
+
+
+1. Hei ja onneksi olkoon mainiosta valinnastasi! Peli 21 on peli, jonka parissa tulet takuulla viihtymään. Tämä ei kuitenkaan ole yksi niistä helpoimmista peleistä, joten älä pety, mikäli et (kymmenellä) ensimmäisellä pelikerralla saa vielä juurikaan pisteitä.
+
+2. Pelin ajamiseksi on erittäin tarpeellista, että tietokoneelta löytyy Java Runtime Environment (JRE) versio 6 tai 7.
+
+3. Peli käynnistetään suorittamalla jar-tiedosto (Peli21.jar). Pelin käynnistyessä käyttäjän silmien edessä avautuu visuaalisesti näyttävä splash screen, jossa lukee pelin nimi "Peli 21".
+
+4. Yläpalkin Game-valikossa on seuraavat toiminnallisuudet:
+
+1) New Game -aloittaa uuden pelin. Pikanäppäin: ENTER
+2) High score... -näyttää huipputulokset
+
+4.1 New game -valintaa klikkaamalla aukeaa valintaikkuna, jossa pelaaja voi syöttää nimensä ja halutessaan vaihtaa ruudukon kokoa. Oletuskokoa (10x6) suositellaan käytettäväksi, mutta tarjoamme mahdollisuuden myös muun kokoisilla (jopa 20x20) ruudukoilla pelaamiseen. Huom. Oletamme, että käyttäjällä on tarpeeksi suuri näyttötila haluamansa kokoisen ruudukon piirtämiseen. Paina OK, ja peli alkaa. Pelaamista käsitellään kohdassa 5.
+
+4.2 High score-valintaa klikkaamalla aukeaa ikkuna, johon on listattu tällä koneella pelatut parhaat tulokset. Tulostaulun voi pyyhkiä valitsemalla "Clear highscore". Varo kuitenkin tällöin vihaisia perheenjäseniä, sukulaisia ja entisiä ystäviäsi. Dismiss-valinta sulkee tulostaulun.
+
+5. Pelin alussa pelaaja asetetaan peliruudukon keskelle ja pelaajan paikka näytetään punaisena ympyränä. Pelissä liikutaan neljällä nuolinäppäimellä nuolten osoittamaan suuntaan. Ruudukossa on nuolia, jotka osoittavat, mihin suuntiin pelaajan on mahdollista liikkua. Jos pelaaja liikkuu nuolen suuntaisesti, hän saa pisteen ja lisää aikaa. Peli jatkuu, kunnes pelaaja tekee laittoman siirron tai aika loppuu.
+
+5.1 Kentällä on tavallisten (keltaisten) nuolten lisäksi sinisiä bonusnuolia, joita keräämällä aktivoituu erillinen bonustila. Bonustila kestää näytölle ilmestyvän bonuspalkin osoittaman ajan verran, jonka jälkeen palataan tavalliseen tilaan. Bonustilan aikana tavallisista siirroista saa kaksinkertaisen pistemäärän. Toisin kuin normaalitilassa, bonustilassa laiton siirto ei lopeta peliä vaan johtaa ainoastaan bonustilan loppumiseen. Mikäli peliaika loppuu bonustilan aikana, jäljelläoleva bonusaika konvertoidaan peliajaksi siltä osin, kun se mahtuu aikamittariin, ja bonustila otetaan pois.
+
+6. Koska aina täytyy olla parantamisen varaa
+6.1 Teksteissä ei toistaiseksi ole reunanpehmennystä (anti-aliasing). Kun ohjelma ajetaan Netbeans-kehitysympäristössä, erilaiset käyttöliittymän tekstit (erityisesti pelin päättyessä esitettävät kursiivit kannustusviestit) näyttävät paljon kauniimmilta kuin lopullista jar-tiedostoa ajettaessa.

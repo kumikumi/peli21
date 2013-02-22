@@ -9,6 +9,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import peli21.Suunta;
 import peli21.domain.Koordinaatit;
+import peli21.domain.Ruudukko;
 import peli21.gui.Kayttoliittyma;
 
 /**
@@ -34,7 +35,7 @@ public class PeliTest {
     @Before
     public void setUp() {
         ruudukkopeli = new Peli("src/testihighscore");
-        gui = new Kayttoliittyma(ruudukkopeli, 40);
+        gui = new Kayttoliittyma(ruudukkopeli, 40, 120);
         SwingUtilities.invokeLater(gui);
         while (gui.getPiirtoalusta() == null) {
             try {
@@ -82,6 +83,7 @@ public class PeliTest {
     @Test
     public void pelaajanLiikutteluToimii() {
         ruudukkopeli.uusiPeli("Batman", 10, 10, 20);
+        ruudukkopeli.setRuudukko(new Ruudukko(10, 10));
         ruudukkopeli.liikutaPelaajaa(Suunta.YLOS);
         ruudukkopeli.liikutaPelaajaa(Suunta.VASEN);
         ruudukkopeli.liikutaPelaajaa(Suunta.YLOS);
@@ -96,6 +98,7 @@ public class PeliTest {
     @Test
     public void pisteidenLaskuToimii() {
         ruudukkopeli.uusiPeli("Oskari", 20, 20, 20);
+        ruudukkopeli.setRuudukko(new Ruudukko(20, 20));
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
@@ -105,6 +108,7 @@ public class PeliTest {
     @Test
     public void peliLoppuuJosLaitonSiirto() {
         ruudukkopeli.uusiPeli("Konnila", 10, 10, 20);
+        ruudukkopeli.setRuudukko(new Ruudukko(10, 10));
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
         ruudukkopeli.liikutaPelaajaa(Suunta.VASEN);
         ruudukkopeli.liikutaPelaajaa(Suunta.OIKEA);
