@@ -142,7 +142,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         g.setFont(new Font("Sans", Font.PLAIN, 60));
         int pituus = (int) g.getFontMetrics().getStringBounds("GAME OVER", g).getWidth();
         g.drawString("GAME OVER", peliruudukko.getLEVEYS() / 2 - pituus / 2 + peliruudukko.getLEVEYS() * sivunPituus / 2, peliruudukko.getKORKEUS() * sivunPituus / 2);
-        g.setFont(new Font("Serif", Font.ITALIC, 34));
+        g.setFont(new Font("Serif", Font.ITALIC, 20));
         String lause;
         if (peli.getPisteet() > 5 && peli.pelaajaSaiEnnatyksen()) { //jos pelaaja sai ennätyksen joka ei ole säälittävän pieni
             lause = "Congratulations! New highscore: " + peli.getPisteet();
