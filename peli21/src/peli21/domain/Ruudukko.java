@@ -169,10 +169,9 @@ public class Ruudukko {
      *
      * @param suunta Suunta, johon pelaajaa liikutetaan.
      * @return Kohderuudun tila sille suunnalle, johon liikuttiin. Tila *
-     * saadaan <code>Tila</code>-luokasta ja voi * * *
-     * olla <code>Tila.ON</code>, <code>Tila.OFF</code> * * *
-     * tai <code>Tila.BONUS</code>. Jos yritettiin liikkua ulos ruudukosta,
-     * palautetaan <code>Tila.OFF</code> ja pelaaja siirretään takaisin.
+     * saadaan <code>Tila</code>-luokasta ja voi * * *      * olla <code>Tila.ON</code>, <code>Tila.OFF</code> * * *      * tai <code>Tila.BONUS</code>. Jos yritettiin liikkua ulos
+     * ruudukosta, palautetaan <code>Tila.OFF</code> ja pelaaja siirretään
+     * takaisin.
      *
      */
     public Tila liikutaPelaajaa(Suunta suunta) {
@@ -209,5 +208,21 @@ public class Ruudukko {
 
     private boolean pelaajaOnRuudukossa() {
         return !(pelaaja.getX() < 0 || pelaaja.getX() >= this.LEVEYS || pelaaja.getY() < 0 || pelaaja.getY() >= this.KORKEUS);
+    }
+
+    /**
+     * Palauttaa tiedon siitä, onko peli "lukossa" eli onko pelaaja päätynyt tilanteeseen, jossa ei voi enää suorittaa laillista siirtoa.
+     * @return <code>true</code> jos deadlock-tilanne oli syntynyt, <code>false</code> jos laillisia siirtoja löytyy.
+     */
+    public boolean deadLock() {
+        for (Suunta s : Suunta.values()) {
+            pelaaja.liikuta(s);
+            boolean voiLiikkua = (pelaajaOnRuudukossa() && taulukko[pelaaja.getX()][pelaaja.getY()].getTila(s) != Tila.OFF);
+            pelaaja.liikuta(s.vastakkainenSuunta());
+            if (voiLiikkua) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -41,6 +41,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private KannustusGeneraattori tauntGen;
     private String endGameMessage;
     private String timeUpMessage;
+    private String deadlockMessage;
     private Color hilightColor;
     private Color bonusColor;
 
@@ -129,7 +130,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         if (peli.getBonusLaskuri() > 0) {
             g.setColor(Color.blue);
             g.drawString("BONUS: ", peliruudukko.getLEVEYS() * sivunPituus + 10, 100);
-            g.fill3DRect(peliruudukko.getLEVEYS() * sivunPituus + 10, 110, peli.getBonusLaskuri() * 2, 10, true);
+            g.fill3DRect(peliruudukko.getLEVEYS() * sivunPituus + 10, 110, peli.getBonusLaskuri() * 5, 10, true);
         }
 
 
@@ -146,6 +147,8 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         String lause;
         if (peli.getPisteet() > 5 && peli.pelaajaSaiEnnatyksen()) { //jos pelaaja sai ennätyksen joka ei ole säälittävän pieni
             lause = "Congratulations! New highscore: " + peli.getPisteet();
+        } else if (peli.deadLock()) {
+            lause = this.deadlockMessage;
         } else if (peli.getAika() == 0) {
             lause = this.timeUpMessage;
         } else {
@@ -171,6 +174,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         this.hilight = peliruudukko.getHilight();
         this.endGameMessage = tauntGen.arvoEndGameLause();
         this.timeUpMessage = tauntGen.arvoTimeUpLause();
+        this.deadlockMessage = tauntGen.arvoDeadLockLause();
     }
 
     @Override

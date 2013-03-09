@@ -10,11 +10,12 @@ import java.util.Random;
  * Tämä luokka generoi pelaajaa kannustavia lauseita.
  */
 public class KannustusGeneraattori {
-    /**
-     * 
-     * @return Satunnaisesti valittu lause, josta käy ilmi, että aika on loppunut pelissä.
-     */
 
+    /**
+     *
+     * @return Satunnaisesti valittu lause, josta käy ilmi, että aika on
+     * loppunut pelissä.
+     */
     public String arvoTimeUpLause() {
         Random arpoja = new Random();
         switch (arpoja.nextInt(5)) {
@@ -34,8 +35,9 @@ public class KannustusGeneraattori {
     }
 
     /**
-     * 
-     * @return Satunnaisesti valittu lause, josta käy ilmi, että pelaaja on töpeksinyt pelissä.
+     *
+     * @return Satunnaisesti valittu lause, josta käy ilmi, että pelaaja on
+     * töpeksinyt pelissä.
      */
     public String arvoEndGameLause() {
         Random arpoja = new Random();
@@ -68,6 +70,22 @@ public class KannustusGeneraattori {
                 return "Mind the gap!";
             case 13:
                 return "No, that's now how you win the game";
+            default:
+                throw new IllegalStateException("Arpoja antoi väärän luvun");
+        }
+    }
+
+    public String arvoDeadLockLause() {
+        Random arpoja = new Random();
+        switch (arpoja.nextInt(4)) {
+            case 0:
+                return "Was that your last straw?";
+            case 1:
+                return "Feeling deadlocked?";
+            case 2:
+                return "You didn't happen to get stuck, did you?";
+            case 3:
+                return "How did you get in a spot like that?";
             default:
                 throw new IllegalStateException("Arpoja antoi väärän luvun");
         }

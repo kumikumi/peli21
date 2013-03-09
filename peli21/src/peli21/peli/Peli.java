@@ -83,10 +83,11 @@ public class Peli implements ActionListener {
         //highscorelista.tulosta();
         System.out.print(highscorelista);
     }
-    
+
     /**
      * Asettaa ruudukon. Voidaan käyttää testaamiseen.
-     * @param ruudukko 
+     *
+     * @param ruudukko
      */
     public void setRuudukko(Ruudukko ruudukko) {
         this.ruudukko = ruudukko;
@@ -97,8 +98,9 @@ public class Peli implements ActionListener {
     }
 
     /**
-     * @return Palauttaa <code>true</code> sen jälkeen, kun peli on kerran aloitettu
-     * eli kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen kerran.
+     * @return Palauttaa <code>true</code> sen jälkeen, kun peli on kerran
+     * aloitettu eli kun <code>uusiPeli</code>-metodia on kutsuttu ensimmäisen
+     * kerran.
      */
     public boolean isAlkanut() {
         return this.alkanut;
@@ -146,31 +148,32 @@ public class Peli implements ActionListener {
     private void reagoiPalautukseen(Tila tila) {
         switch (tila) {
             case BONUS:
-                //Jos pelaaja sai bonuksen, alaspäin laskeva bonuslaskuri laitetaan täyteen (50).
+                //Jos pelaaja sai bonuksen, alaspäin laskeva bonuslaskuri laitetaan täyteen (20).
                 //Bonuksesta saa lisäksi 8+2 pistettä.
-                bonuslaskuri = 50;
+                aika = oletusaika;
+                bonuslaskuri = 20;
                 pisteet += 8;
-                
-                //Tämän lisäksi tapahtuvat kaikki "ON"-tilaa koskevat asiat:
+
+            //Tämän lisäksi tapahtuvat kaikki "ON"-tilaa koskevat asiat:
             case ON:
+
+                if (aika + 4 > oletusaika) {
+                    aika = oletusaika;
+                } else {
+                    aika = aika + 4;
+                }
+
                 if (bonuslaskuri > 0) {
                     pisteet = pisteet + 2; //Jos bonus on päällä, tavalliset pisteet tulevat kaksinkertaisena.
-                    aika = oletusaika; //Jos bonus on päällä, niin ajan saa onnistuneesta siirrosta täyteen.
+                    //aika = oletusaika; //Jos bonus on päällä, niin ajan saa onnistuneesta siirrosta täyteen.
                 } else {
                     pisteet++;
-                    if (aika + 3 > oletusaika) {
-                        aika = oletusaika;
-                    } else {
-                        aika = aika +3;
-                    }
-                    
-                    
-                    
+
 //                    if (aika+aika/2 > oletusaika) {
 //                        aika = oletusaika;
 //                    } else {
 //                        aika+=aika/2; //Jos ollaan normaalitilassa, aika 1.5-kertaistuu joka onnistuneesta siirrosta.
-                        //aika += (oletusaika - aika) / 2; //Toinen vaihtoehto olis että aika täytetään puoliksi.
+                    //aika += (oletusaika - aika) / 2; //Toinen vaihtoehto olis että aika täytetään puoliksi.
 //                    }
                 }
                 break;
@@ -199,13 +202,17 @@ public class Peli implements ActionListener {
     public int getBonusLaskuri() {
         return this.bonuslaskuri;
     }
-    
+
     public Highscorelista getHighscore() {
         return this.highscorelista;
     }
-    
+
     public boolean pelaajaSaiEnnatyksen() {
         return this.pelaajaSaiEnnatyksen;
+    }
+
+    public boolean deadLock() {
+        return ruudukko.deadLock();
     }
 
     @Override
@@ -223,7 +230,7 @@ public class Peli implements ActionListener {
                 aika = Math.min(oletusaika, bonuslaskuri);
                 bonuslaskuri = 0;
             } else {
-            this.lopetaPeli();
+                this.lopetaPeli();
             }
         }
         this.paivitettava.paivita();
