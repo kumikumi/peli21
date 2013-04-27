@@ -26,7 +26,7 @@ public class main {
         System.out.println("Eeppinen ruudukkopeli on täällä!");
 
         Peli ruudukkopeli = new Peli("peli21_highscore.omgwtfbbq");
-        Kayttoliittyma gui = new Kayttoliittyma(ruudukkopeli, 60, 120);
+        Kayttoliittyma gui = new Kayttoliittyma(ruudukkopeli, 64, 120);
         SwingUtilities.invokeLater(gui);
         while (gui.getPiirtoalusta() == null) {
             try {
