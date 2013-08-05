@@ -11,6 +11,7 @@ import peli21.Tila;
 import peli21.Suunta;
 import peli21.domain.Ruudukko;
 import peli21.gui.Paivitettava;
+import peli21.gui.PaivitysTyyppi;
 import peli21.highscore.Highscorelista;
 
 /**
@@ -71,6 +72,7 @@ public class Peli implements ActionListener {
         this.oletusaika = aika;
         this.aika = aika;
         this.paivitettava.paivitaKomponentit();
+        this.paivitettava.setPaivitysTyyppi(PaivitysTyyppi.KAIKKI);
         this.paivitettava.paivita();
         this.jatkuu = true;
         this.pelaajaSaiEnnatyksen = false;
@@ -139,6 +141,7 @@ public class Peli implements ActionListener {
             return;
         }
         reagoiPalautukseen(ruudukko.liikutaPelaajaa(suunta));
+        this.paivitettava.setPaivitysTyyppi(PaivitysTyyppi.KAIKKI);
         this.paivitettava.paivita();
         if (!jatkuu) {
             return;
@@ -220,12 +223,17 @@ public class Peli implements ActionListener {
         if (!jatkuu) {
             return;
         }
+        paivitettava.setPaivitysTyyppi(PaivitysTyyppi.HUD);
         if (bonuslaskuri > 0) {
             bonuslaskuri--;
+            if (bonuslaskuri == 0) {
+                paivitettava.setPaivitysTyyppi(PaivitysTyyppi.KAIKKI);
+            }
         }
         // @TODO: Timer logic here
         aika--;
         if (aika == 0) {
+            paivitettava.setPaivitysTyyppi(PaivitysTyyppi.KAIKKI);
             if (bonuslaskuri > 0) {
                 aika = Math.min(oletusaika, bonuslaskuri);
                 bonuslaskuri = 0;

@@ -81,7 +81,7 @@ public class Kayttoliittyma implements Runnable {
         //Luodaan ensin piirtoalusta, lisätään se container-olioon
         //Sitten luodaan näppäimistönkuuntelija ja annetaan se framelle
         //ja luodaan vielä hauska menubar kaupan päälle
-        piirtoalusta = new Piirtoalusta(peli, sivunPituus);
+        piirtoalusta = new Piirtoalusta(peli, sivunPituus, sivuPalkinLeveys);
         contentPane.add(piirtoalusta);
 
         frame.addKeyListener(new Nappaimistonkuuntelija(peli));

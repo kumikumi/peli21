@@ -45,10 +45,14 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private String deadlockMessage;
     private Color hilightColor;
     private Color bonusColor;
+    private int sivuPalkinLeveys;
+    private PaivitysTyyppi paivitysTyyppi;
 
-    public Piirtoalusta(Peli peli, int palanSivunPituus) {
+    public Piirtoalusta(Peli peli, int palanSivunPituus, int sivuPalkinLeveys) {
+        this.paivitysTyyppi = PaivitysTyyppi.KAIKKI;
         this.peli = peli;
         this.sivunPituus = palanSivunPituus;
+        this.sivuPalkinLeveys = sivuPalkinLeveys;
         this.font = new Font("Serif", Font.PLAIN, 16);
         this.kuvat = new EnumMap<Suunta, Image>(Suunta.class);
         this.bonuskuvat = new EnumMap<Suunta, Image>(Suunta.class);
@@ -58,6 +62,11 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         //this.hilightColor = new Color((float) 0.9, (float) 0.94, (float) 0.43, (float) 0.0);
         this.bonusColor = new Color(0x050050);
         lataaKuvat();
+    }
+
+    @Override
+    public void setPaivitysTyyppi(PaivitysTyyppi pt) {
+        this.paivitysTyyppi = pt;
     }
 
     private void lataaKuvat() {
@@ -85,20 +94,30 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
             return;
         }
 
-        super.paintComponent(g);
-        if (peli.getBonusLaskuri() > 0) {
-            piirraBonusRuudukko(g);
-        } else {
-            piirraRuudukko(g);
-            if (hilight.getX() != -1) {
-                piirraHilight(g);
-            }
+        switch (paivitysTyyppi) {
+            case HUD:
+                piirraHud(g);
+                break;
+            case KAIKKI:
+                super.paintComponent(g);
+                if (peli.getBonusLaskuri() > 0) {
+                    piirraBonusRuudukko(g);
+                } else {
+                    piirraRuudukko(g);
+                    if (hilight.getX() != -1) {
+                        piirraHilight(g);
+                    }
+                }
+                piirraPelihahmo(g);
+                piirraHud(g);
+                if (!peli.jatkuu()) {
+                    piirraLoppuTeksti(g);
+                }
         }
-        piirraPelihahmo(g);
-        piirraHud(g);
-        if (!peli.jatkuu()) {
-            piirraLoppuTeksti(g);
-        }
+
+
+
+
     }
 
     private void piirraRuudukko(Graphics g) {
@@ -118,10 +137,10 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
             }
         }
     }
-    
+
     private void piirraHilight(Graphics g) {
         g.setColor(hilightColor);
-        g.fill3DRect(hilight.getX()*sivunPituus, hilight.getY()*sivunPituus, sivunPituus, sivunPituus, true);
+        g.fill3DRect(hilight.getX() * sivunPituus, hilight.getY() * sivunPituus, sivunPituus, sivunPituus, true);
     }
 
     private void piirraBonusRuudukko(Graphics g) {
@@ -142,13 +161,16 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         }
     }
 
-    
     private void piirraPelihahmo(Graphics g) {
         g.setColor(Color.RED);
         g.fillOval(pelihahmo.getX() * sivunPituus, pelihahmo.getY() * sivunPituus, sivunPituus, sivunPituus);
     }
 
     private void piirraHud(Graphics g) {
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(peliruudukko.getLEVEYS() * sivunPituus, 0, sivuPalkinLeveys, peliruudukko.getKORKEUS() * sivunPituus);
+
+        g.setColor(Color.RED);
         g.setFont(font);
         g.drawString(peli.getPelaajanNimi(), peliruudukko.getLEVEYS() * sivunPituus + 10, 20);
         g.drawString("SCORE: " + peli.getPisteet(), peliruudukko.getLEVEYS() * sivunPituus + 10, 40);
