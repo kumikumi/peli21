@@ -9,7 +9,8 @@ package peli21.gui;
  * @author mikko
  */
 public interface Paivitettava {
-    void paivita();
+    //void paivita();
+    void paivita(PaivitysTyyppi pt);
     void paivitaKomponentit();
-    void setPaivitysTyyppi(PaivitysTyyppi pt);
+    //void setPaivitysTyyppi(PaivitysTyyppi pt);
 }

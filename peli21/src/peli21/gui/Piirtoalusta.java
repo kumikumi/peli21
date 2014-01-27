@@ -47,7 +47,7 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
     private Color bonusColor;
     private int sivuPalkinLeveys;
     private PaivitysTyyppi paivitysTyyppi;
-
+    
     public Piirtoalusta(Peli peli, int palanSivunPituus, int sivuPalkinLeveys) {
         this.paivitysTyyppi = PaivitysTyyppi.KAIKKI;
         this.peli = peli;
@@ -64,10 +64,10 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         lataaKuvat();
     }
 
-    @Override
-    public void setPaivitysTyyppi(PaivitysTyyppi pt) {
-        this.paivitysTyyppi = pt;
-    }
+    //@Override
+//    public void setPaivitysTyyppi(PaivitysTyyppi pt) {
+//        this.paivitysTyyppi = pt;
+//    }
 
     private void lataaKuvat() {
         try {
@@ -222,8 +222,14 @@ public class Piirtoalusta extends JPanel implements Paivitettava {
         this.deadlockMessage = tauntGen.arvoDeadLockLause();
     }
 
+//    @Override
+//    public void paivita() {
+//        super.repaint();
+//    }
+    
     @Override
-    public void paivita() {
+    public void paivita(PaivitysTyyppi pt) {
+        this.paivitysTyyppi = pt;
         super.repaint();
     }
 }

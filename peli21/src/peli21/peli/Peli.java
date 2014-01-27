@@ -36,6 +36,7 @@ public class Peli implements ActionListener {
     private int pisteet;
     private Ruudukko ruudukko;
     private Paivitettava paivitettava;
+    private PaivitysTyyppi paivitysTyyppi;
     private boolean pelaajaSaiEnnatyksen;
     //private Pelihahmo pelaaja;
 
@@ -72,8 +73,7 @@ public class Peli implements ActionListener {
         this.oletusaika = aika;
         this.aika = aika;
         this.paivitettava.paivitaKomponentit();
-        this.paivitettava.setPaivitysTyyppi(PaivitysTyyppi.KAIKKI);
-        this.paivitettava.paivita();
+        this.paivitettava.paivita(PaivitysTyyppi.KAIKKI);
         this.jatkuu = true;
         this.pelaajaSaiEnnatyksen = false;
     }
@@ -141,8 +141,7 @@ public class Peli implements ActionListener {
             return;
         }
         reagoiPalautukseen(ruudukko.liikutaPelaajaa(suunta));
-        this.paivitettava.setPaivitysTyyppi(PaivitysTyyppi.KAIKKI);
-        this.paivitettava.paivita();
+        this.paivitettava.paivita(PaivitysTyyppi.KAIKKI);
         if (!jatkuu) {
             return;
         }
@@ -223,17 +222,17 @@ public class Peli implements ActionListener {
         if (!jatkuu) {
             return;
         }
-        paivitettava.setPaivitysTyyppi(PaivitysTyyppi.HUD);
+        this.paivitysTyyppi = PaivitysTyyppi.HUD;
         if (bonuslaskuri > 0) {
             bonuslaskuri--;
             if (bonuslaskuri == 0) {
-                paivitettava.setPaivitysTyyppi(PaivitysTyyppi.KAIKKI);
+                this.paivitysTyyppi = PaivitysTyyppi.KAIKKI;
             }
         }
         // @TODO: Timer logic here
         aika--;
         if (aika == 0) {
-            paivitettava.setPaivitysTyyppi(PaivitysTyyppi.KAIKKI);
+            this.paivitysTyyppi = PaivitysTyyppi.KAIKKI;
             if (bonuslaskuri > 0) {
                 aika = Math.min(oletusaika, bonuslaskuri);
                 bonuslaskuri = 0;
@@ -241,6 +240,6 @@ public class Peli implements ActionListener {
                 this.lopetaPeli();
             }
         }
-        this.paivitettava.paivita();
+        this.paivitettava.paivita(this.paivitysTyyppi);
     }
 }
